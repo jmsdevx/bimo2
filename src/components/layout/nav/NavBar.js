@@ -4,8 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import LinkBurger from "./LinkBurger";
+// import LinkBurger from "./LinkBurger";
 
 const styles = {
   root: {
@@ -17,6 +16,9 @@ const styles = {
   menuButton: {
     marginLeft: -12,
     marginRight: 20
+  },
+  login: {
+    fontColor: "white"
   }
 };
 
@@ -26,11 +28,16 @@ function ButtonAppBar(props) {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <LinkBurger className={classes.menuButton} />
+          {/* <LinkBurger className={classes.menuButton} /> */}
           <Typography variant="h6" color="inherit" className={classes.grow}>
             bimo
           </Typography>
-          <a href={`${process.env.REACT_APP_SERVER}`}>Login</a>
+          <a
+            className={classes.login}
+            href={`${process.env.REACT_APP_SERVER}/login`}
+          >
+            Login
+          </a>
         </Toolbar>
       </AppBar>
     </div>

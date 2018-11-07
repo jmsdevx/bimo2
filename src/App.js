@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NavBar from "./components/layout/nav/NavBar";
+// import NavBar from "./components/layout/nav/NavBar";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter } from "react-router-dom";
 import routes from "./routes";
@@ -32,7 +32,7 @@ class App extends Component {
       <BrowserRouter>
         <MuiThemeProvider theme={theme}>
           <div>
-            <NavBar />
+            {/* <NavBar /> */}
             {routes}
           </div>
         </MuiThemeProvider>

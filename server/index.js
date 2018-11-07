@@ -8,9 +8,13 @@ const massive = require("massive");
 const cors = require("cors");
 const port = 3005;
 const authCtrl = require("./controllers/authCtrl");
+const { getUser } = require("./controllers/userCtrl");
 
+//basic
 app.use(json());
 app.use(cors());
+
+//sessions
 app.use(
   session({
     resave: false,
@@ -21,8 +25,13 @@ app.use(
     }
   })
 );
+
+//auth
 app.use(passport.initialize());
 app.use(passport.session());
+authCtrl(app);
+
+//db
 massive(process.env.STRING)
   .then(dbInstance => {
     app.set("db", dbInstance);
@@ -36,26 +45,11 @@ massive(process.env.STRING)
   })
   .catch(error => console.log(error));
 
-// app.get("/token", function(req, res) {
-//     let identity = faker.name.findName();
+//to ducks
+app.get("/api/user/:id", getUser);
 
-//     let token = new AccessToken(
-//       process.env.TWILIO_SID,
-//       process.env.TWILIO_API_KEY,
-//       process.env.TWILIO_SECRET
-//     );
+//chat token
+// app.get("/token", callback)
 
-//     token.identity = identity;
-
-//     const grant = new VideoGrant();
-//     token.addGrant(grant);
-
-//     res.send({
-//       identity: identity,
-//       token: token.toJwt()
-//     });
-//   });
-
-authCtrl(app);
-
+//server
 app.listen(port, () => console.log(`Listening on ${port}`));
