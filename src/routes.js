@@ -10,8 +10,8 @@ import Chat from "./components/user/chat/Chat";
 
 export default (
   <Switch>
-    <Route exact path="/" component={Landing} /> 
-    <Route path="/profile/:auth_id" component={Profile} />
+    <Route exact path="/" component={Landing} />
+    <Route path="/profile" component={Profile} />
     <Route path="/write/homework" component={Write} />
     <Route path="/write/homework/results/:id" component={Results} />
     <Route path="/write/note" component={Write} />

@@ -30,7 +30,7 @@ function ButtonAppBar(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             bimo
           </Typography>
-          <Button color="inherit">Login</Button>
+          <a href={`${process.env.REACT_APP_SERVER}`}>Login</a>
         </Toolbar>
       </AppBar>
     </div>
