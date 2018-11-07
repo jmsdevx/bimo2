@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,400i");
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.splashtitle {
+  position: absolute;
+  z-index: 1;
+  margin: 17vw 0px 0px 5vw;
+  display: flex;
+  justify-content: space-between;
+  width: 85vw;
+}
+
+#outlined-search {
+  height: 5vh;
+  color: white;
+  font-size: 4em;
+}
