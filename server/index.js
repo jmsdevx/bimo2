@@ -46,7 +46,7 @@ massive(process.env.STRING)
   .catch(error => console.log(error));
 
 //to ducks
-app.get("/api/user/:id", getUser);
+app.get("/api/user", getUser);
 
 //chat token
 // app.get("/token", callback)

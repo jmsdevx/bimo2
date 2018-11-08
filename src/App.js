@@ -2,6 +2,8 @@ import React, { Component } from "react";
 // import NavBar from "./components/layout/nav/NavBar";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./components/ducks/store";
 import routes from "./routes";
 import "./css/App.css";
 
@@ -29,14 +31,16 @@ const theme = createMuiTheme({
 class App extends Component {
   render() {
     return (
-      <BrowserRouter>
-        <MuiThemeProvider theme={theme}>
-          <div>
-            {/* <NavBar /> */}
-            {routes}
-          </div>
-        </MuiThemeProvider>
-      </BrowserRouter>
+      <Provider store={store}>
+        <BrowserRouter>
+          <MuiThemeProvider theme={theme}>
+            <div>
+              {/* <NavBar /> */}
+              {routes}
+            </div>
+          </MuiThemeProvider>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }
