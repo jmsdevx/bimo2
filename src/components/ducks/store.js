@@ -13,10 +13,16 @@ import promiseMiddleWare from "redux-promise-middleware";
 
 import note_reducer from "./note_reducer";
 import user_reducer from "./user_reducer";
-import vocab_reducer from './vocab_reducer' 
+import vocab_reducer from "./vocab_reducer";
+import toggle_reducer from "./toggle_reducer";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const reducers = combineReducers({ note_reducer, user_reducer, vocab_reducer });
+const reducers = combineReducers({
+  note_reducer,
+  user_reducer,
+  vocab_reducer,
+  toggle_reducer
+});
 const middlewares = composeEnhancers(applyMiddleware(promiseMiddleWare()));
 const store = createStore(reducers, middlewares);
 

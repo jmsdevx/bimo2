@@ -5,6 +5,10 @@
   padding: 0;
 }
 
+a {
+  color: #29cb9d;
+}
+
 .splashtitle {
   position: absolute;
   z-index: 1;

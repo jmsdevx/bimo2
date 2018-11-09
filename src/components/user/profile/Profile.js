@@ -15,14 +15,14 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./user_data/ListIcons";
-import { connect } from "react-redux";
-import { getUser } from "../../ducks/user_reducer";
+import profSubRoutes from "../../../routes/profSubRoutes";
 
 const drawerWidth = 250;
 
 const styles = theme => ({
   root: {
-    display: "flex"
+    display: "flex",
+    height: "100vh"
   },
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed
@@ -62,6 +62,7 @@ const styles = theme => ({
   drawerPaper: {
     position: "relative",
     whiteSpace: "nowrap",
+    height: "100%",
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
@@ -83,14 +84,8 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing.unit * 3,
-    height: "100vh",
+    height: "100%",
     overflow: "auto"
-  },
-  chartContainer: {
-    marginLeft: -22
-  },
-  tableContainer: {
-    height: 320
   },
   h5: {
     marginBottom: theme.spacing.unit * 2
@@ -101,18 +96,8 @@ class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      open: true,
-      profile: []
+      open: true
     };
-  }
-
-  async componentDidMount() {
-    await this.props.getUser();
-    this.setProfile();
-  }
-
-  setProfile() {
-    this.setState({ profile: this.props.state.user_reducer.user });
   }
 
   handleDrawerOpen = () => {
@@ -158,7 +143,7 @@ class Profile extends Component {
                 noWrap
                 className={classes.title}
               >
-                Profile
+                Profile {this.state.f_name} {this.state.l_name}
               </Typography>
               <IconButton color="inherit">
                 <Badge badgeContent={4} color="secondary">
@@ -187,8 +172,8 @@ class Profile extends Component {
             <Divider />
             <List>{secondaryListItems}</List>
           </Drawer>
+          {profSubRoutes}
         </div>
-        <div>{this.props.user_reducer}</div>
       </div>
     );
   }
@@ -198,13 +183,4 @@ Profile.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-function mapStatetoProps(state) {
-  return { state };
-}
-
-export default withStyles(styles)(
-  connect(
-    mapStatetoProps,
-    { getUser }
-  )(Profile)
-);
+export default withStyles(styles)(Profile);
