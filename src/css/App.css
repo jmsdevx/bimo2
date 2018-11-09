@@ -6,6 +6,11 @@
 }
 
 a {
+  color: #843ffb;
+  transition: 0.3s;
+}
+
+a:hover {
   color: #29cb9d;
 }
 

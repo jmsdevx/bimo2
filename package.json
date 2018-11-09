@@ -10,6 +10,8 @@
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",
     "dotenv": "^6.1.0",
+    "draft-js": "^0.10.5",
+    "draft-js-plugins-editor": "^2.1.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "massive": "^5.5.1",
@@ -21,9 +23,12 @@
     "react-redux": "^5.1.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
+    "react-sound": "^1.2.0",
     "redux": "^4.0.1",
     "redux-promise-middleware": "^5.1.1",
-    "styled-components": "^4.0.3"
+    "styled-components": "^4.0.3",
+    "twilio": "^3.23.2",
+    "twilio-video": "^1.14.1"
   },
   "scripts": {
     "start": "react-scripts start",
