@@ -1,5 +1,8 @@
 import React from "react";
 import Sound from "react-sound";
+import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
+import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
+import ReplayIcon from "@material-ui/icons/Replay";
 
 function control(text, clickHandler) {
   const onClick = e => {
@@ -34,21 +37,24 @@ export default class PlayerControls extends React.Component {
 
     return (
       <div>
-        Volume:
+        {/* Volume:
         <button onClick={this.props.onVolumeDown}>-</button>
-        <button onClick={this.props.onVolumeUp}>+</button>
+        <button onClick={this.props.onVolumeUp}>+</button> */}
         <ul>
-          {controls.play && control("Play", this.props.onPlay)}
-          {controls.stop && control("Stop", this.props.onStop)}
-          {controls.pause && control("Pause", this.props.onPause)}
-          {controls.resume && control("Resume", this.props.onResume)}
+          {controls.play &&
+            control(<ReplayIcon id="audio" />, this.props.onPlay)}
+          {/* {controls.stop && control("Stop", this.props.onStop)} */}
+          {controls.pause &&
+            control(<PauseCircleOutlineIcon id="audio" />, this.props.onPause)}
+          {controls.resume &&
+            control(<PlayCircleOutlineIcon id="audio" />, this.props.onResume)}
         </ul>
-        <div>
+        {/* <div>
           Playback Rate:
           <button onClick={this.props.onPlaybackRateDown}>-</button>{" "}
           {numberFormat.format(this.props.playbackRate)}{" "}
           <button onClick={this.props.onPlaybackRateUp}>+</button>
-        </div>
+        </div> */}
       </div>
     );
   }

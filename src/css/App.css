@@ -63,6 +63,25 @@ a:hover {
   height: 200px;
 }
 
-.searchcontainer {
+#searchcontainer {
   margin: 8vh 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#searchbar {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.bar {
+  display: flex;
+}
+
+#audio {
+  height: 6vw;
+  width: 6vw;
 }

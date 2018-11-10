@@ -2,7 +2,39 @@ import React, { Component } from "react";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import Speech from "./Speech";
-import { callbackify } from "util";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Card from "@material-ui/core/Card";
+import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import TextField from "@material-ui/core/TextField";
+
+const styles = {
+  card: {
+    minWidth: "70vw",
+    textAlign: "center",
+    alignItems: "stretch",
+    margin: "0 4vw 0 4vw",
+    minHeight: "8vh"
+  },
+  bullet: {
+    display: "inline-block",
+    margin: "0 2px",
+    transform: "scale(0.8)"
+  },
+  title: {
+    fontSize: 14
+  },
+  pos: {
+    marginBottom: 12
+  },
+  results: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "stretch"
+  }
+};
 
 class Search extends Component {
   constructor(props) {
@@ -56,16 +88,6 @@ class Search extends Component {
   }
 
   drilldefs() {
-    let defs = this.state.results.map((e, i) => {
-      return e.entries.map((f, j) => {
-        return f.senses.map((g, k) => {
-          return g.definitions || g.short_definitions;
-        });
-      });
-    });
-    let lexCat = this.state.results.map((e, i) => {
-      return e.lexicalCategory;
-    });
     let speech = this.state.results.map((e, i) => {
       return e.pronunciations
         ? e.pronunciations.filter(f => {
@@ -73,36 +95,24 @@ class Search extends Component {
           })
         : this.state.speech;
     });
-    let text = this.state.results.map((e, i) => {
-      return e.text;
+    let cardobject = [];
+    for (let i = 0; i < this.state.results.length; i++) {
+      this.state.results[i].entries.map((f, j) => {
+        return f.senses.map((g, k) => {
+          let final = {};
+          final[this.state.results[i].lexicalCategory] =
+            g.definitions || g.short_definitions;
+          return cardobject.push(final);
+        });
+      });
+    }
+    this.setState({
+      cardobject: cardobject,
+      check: !this.state.check,
+      speech: speech
     });
-    this.setState(
-      {
-        defs: defs,
-        lexCat: lexCat,
-        speech: speech,
-        text: text,
-        check: !this.state.check
-      }
-      // () => this.cardObject(this.cardClosure)
-      // () => this.cardClosure(this.cardObject)
-    );
+    console.log(this.state.cardobject);
   }
-
-  // cardObject() {
-  //   const { lexCat, defs } = this.state;
-  //   for (let i = 0; i < lexCat.length; i++) {
-  //     defs.map((f, j) => {
-  //       return [lexCat[i]] + " " + f;
-  //     });
-  //   }
-  // }
-
-  // cardClosure(callback) {
-  //   let cardobject = callback();
-  //   this.setState({ cardobject: cardobject });
-  //   console.log(this.state.cardobject);
-  // }
 
   async handleThesaurus() {
     await axios
@@ -145,39 +155,38 @@ class Search extends Component {
     return <Speech speech={this.state.speech[0][0].audioFile} />;
   }
   render() {
-    let lexCatDisplay = this.state.lexCat.map((e, i) => {
-      return (
-        <div className="lexCat" key={i}>
-          <h1>{e}</h1>
-        </div>
-      );
-    });
-
-    let defsDisplay = this.state.defs.map((e, i) => {
-      return e.map((f, j) => {
-        return f.map((g, k) => {
-          return (
-            <div className="defs" key={k}>
-              <h3>
-                {k + 1}. {g}
-              </h3>
-            </div>
-          );
-        });
-      });
+    const { classes } = this.props;
+    let cardFactory = this.state.cardobject.map((e, i) => {
+      // return console.log(Object.keys(e));
+      // return console.log(Object.values(e));
+      return Object.values(e) !== typeof undefined ? (
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              {Object.keys(e)}
+            </Typography>
+            <Typography component="p">{Object.values(e)}</Typography>
+          </CardContent>
+          {/* <CardActions>
+            <Button size="small">Save</Button>
+          </CardActions> */}
+        </Card>
+      ) : null;
     });
 
     return (
-      <div className="searchcontainer">
-        <div className="searchformbox">
-          <form onSubmit={this.handleSubmit} className="searchForm" />
-          <div className="searchbar">
+      <div id="searchcontainer">
+        <form onSubmit={this.handleSubmit} className="searchForm" />
+        <div id="searchbar">
+          <div>
             <label htmlFor="search" />
-            <input
-              type="input"
-              className="input"
+            <TextField
               id="input"
-              placeholder="search..."
+              label="search"
+              type="input"
+              className={classes.textField}
+              margin="normal"
+              variant="outlined"
               onChange={this.handleChange}
             />
 
@@ -195,19 +204,70 @@ class Search extends Component {
             <Button className="submitbtn" onClick={this.handleSubmit}>
               Search
             </Button>
-            <Button onClick={this.handleThesaurus}>Thesaurus</Button>
           </div>
-        </div>
-        <div className="searchResults">
-          <div>{lexCatDisplay}</div>
-          <div>{defsDisplay}</div>
+          {/* <Button onClick={this.handleThesaurus}>Thesaurus</Button> */}
           {this.state.check ? (
             <Speech speech={this.state.speech[0][0].audioFile} />
           ) : null}
+        </div>
+        <div className={classes.results}>
+          {/* <div>{lexCatDisplay}</div>
+          <div>{defsDisplay}</div> */}
+          {cardFactory}
         </div>
       </div>
     );
   }
 }
 
-export default Search;
+export default withStyles(styles)(Search);
+
+// drilldefs() {
+//   let defs = this.state.results.map((e, i) => {
+//     return e.entries.map((f, j) => {
+//       return f.senses.map((g, k) => {
+//         return g.definitions || g.short_definitions;
+//       });
+//     });
+//   });
+//   let lexCat = this.state.results.map((e, i) => {
+//     return e.lexicalCategory;
+//   });
+
+//   let text = this.state.results.map((e, i) => {
+//     return e.text;
+//   });
+//   this.setState(
+//     {
+//       defs: defs,
+//       lexCat: lexCat,
+//       speech: speech,
+//       text: text,
+//       check: !this.state.check
+//     }
+//     // () => this.cardObject(this.cardClosure)
+//     // () => this.cardClosure(this.cardObject)
+//   );
+// }
+
+// let lexCatDisplay = this.state.lexCat.map((e, i) => {
+//   return (
+//     <div className="lexCat" key={i}>
+//       <h1>{e}</h1>
+//     </div>
+//   );
+// });
+
+// let defsDisplay = this.state.defs.map((e, i) => {
+//   return e.map((f, j) => {
+//     return f.map((g, k) => {
+//       return (
+//         <div className="defs" key={k}>
+//           <h3>
+//             {k + 1}. {g}
+//           </h3>
+//         </div>
+//       );
+//     });
+//   });
+// });

@@ -43,15 +43,15 @@ class Speech extends Component {
   render() {
     const { volume, playbackRate, loop } = this.state;
     return (
-      <div>
-        <label>
+      <div className="bar">
+        {/* <label>
           <input
             type="checkbox"
             checked={this.state.controlled}
             onChange={this.handleControlledComponentChange}
           />
           Control
-        </label>
+        </label> */}
         <PlayerControls
           playStatus={this.state.playStatus}
           onPlay={() => this.setState({ playStatus: Sound.status.PLAYING })}
