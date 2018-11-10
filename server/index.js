@@ -9,10 +9,20 @@ const cors = require("cors");
 const port = 3005;
 const authCtrl = require("./controllers/authCtrl");
 const { getUser } = require("./controllers/userCtrl");
+const AccessToken = require("twilio").jwt.AccessToken;
+const VideoGrant = AccessToken.VideoGrant;
+const faker = require("faker");
+
+//controllers
+const { getSearch } = require("./controllers/searchCtrl");
 
 //basic
 app.use(json());
 app.use(cors());
+
+//search
+app.post("/api/search", getSearch);
+// app.post("/api/search/synonyms", getSynonyms);
 
 //sessions
 app.use(
@@ -49,7 +59,24 @@ massive(process.env.STRING)
 app.get("/api/user", getUser);
 
 //chat token
-// app.get("/token", callback)
+app.get("/token", function(req, res) {
+  let identity = faker.name.findName();
+  let token = new AccessToken(
+    process.env.TWILIO_SID,
+    process.env.TWILIO_API_KEY,
+    process.env.TWILIO_SECRET
+  );
+
+  token.identity = identity;
+
+  const grant = new VideoGrant();
+  token.addGrant(grant);
+
+  res.send({
+    identity: identity,
+    token: token.toJwt()
+  });
+});
 
 //server
 app.listen(port, () => console.log(`Listening on ${port}`));

@@ -25,7 +25,7 @@ function Transition(props) {
   return <Slide direction="up" {...props} />;
 }
 
-class FullScreenDialog extends React.Component {
+class WriteNote extends React.Component {
   state = {
     open: false
   };
@@ -42,7 +42,13 @@ class FullScreenDialog extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <Button onClick={this.handleClickOpen}>New Note</Button>
+        <Button
+          className={classes.buttonContainer}
+          onClick={this.handleClickOpen}
+          fullWidth={true}
+        >
+          Create New Note
+        </Button>
         <Dialog
           fullScreen
           open={this.state.open}
@@ -66,6 +72,7 @@ class FullScreenDialog extends React.Component {
               </Button>
             </Toolbar>
           </AppBar>
+          {/* <Editor /> */}
           <Editor />
         </Dialog>
       </div>
@@ -73,8 +80,8 @@ class FullScreenDialog extends React.Component {
   }
 }
 
-FullScreenDialog.propTypes = {
+WriteNote.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(FullScreenDialog);
+export default withStyles(styles)(WriteNote);

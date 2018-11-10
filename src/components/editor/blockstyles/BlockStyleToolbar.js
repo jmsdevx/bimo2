@@ -1,9 +1,22 @@
 import React from "react";
 import HeaderStyleDropdown from "./HeaderStyleDropdown";
 import BlockStyleButton from "./BlockStyleButton";
+import { withStyles } from "@material-ui/core/styles";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import List from "@material-ui/core/List";
+
+const styles = {
+  font: {
+    display: "flex",
+    flexDirection: "column"
+  }
+};
 
 class BlockStyleToolbar extends React.Component {
   render() {
+    const { classes } = this.props;
     const { editorState } = this.props;
     const selection = editorState.getSelection();
     const blockType = editorState
@@ -12,27 +25,34 @@ class BlockStyleToolbar extends React.Component {
       .getType();
 
     return (
-      <div>
-        <span className="RichEditor-controls">
-          <HeaderStyleDropdown
-            headerOptions={HEADER_TYPES}
-            active={blockType}
-            onToggle={this.props.onToggle}
-          />
-
-          {BLOCK_TYPES.map(type => {
+      <div className={classes.font}>
+        <List>
+          <ListItem button onClick={this.onBoldClick}>
+            <HeaderStyleDropdown
+              headerOptions={HEADER_TYPES}
+              active={blockType}
+              onToggle={this.props.onToggle}
+            />
+            <ListItemIcon />
+            <ListItemText primary="Size" />
+          </ListItem>
+        </List>
+        <List>
+          {BLOCK_TYPES.map((type, i) => {
             return (
-              <BlockStyleButton
-                active={type.style === blockType}
-                label={type.label}
-                onToggle={this.props.onToggle}
-                style={type.style}
-                key={type.label}
-                type={type}
-              />
+              <ListItem>
+                <BlockStyleButton
+                  active={type.style === blockType}
+                  label={type.label}
+                  onToggle={this.props.onToggle}
+                  style={type.style}
+                  key={type.label}
+                  type={type}
+                />
+              </ListItem>
             );
           })}
-        </span>
+        </List>
       </div>
     );
   }
@@ -62,4 +82,4 @@ export function getBlockStyle(block) {
   }
 }
 
-export default BlockStyleToolbar;
+export default withStyles(styles)(BlockStyleToolbar);

@@ -60,7 +60,7 @@ class PageContainer extends Component {
     this.state = {
       editorState: EditorState.createEmpty(),
       displayedNote: "new",
-      note_title: "My Note"
+      note_title: "My Homework"
     };
     this.onChange = editorState => this.setState({ editorState });
     this.plugins = [highlightPlugin, addLinkPlugin];
@@ -157,7 +157,7 @@ class PageContainer extends Component {
                 <div>
                   <TextField
                     id="outlined-with-placeholder"
-                    label="Note Title"
+                    label="Homework Title"
                     className={classes.textField}
                     margin="normal"
                     variant="outlined"

@@ -1,4 +1,5 @@
 import React from "react";
+
 class BlockStyleButton extends React.Component {
   onToggle = e => {
     e.preventDefault();
@@ -10,9 +11,9 @@ class BlockStyleButton extends React.Component {
       className += " RichEditor-activeButton";
     }
     return (
-      <span className={className} onClick={this.onToggle}>
+      <div className={className} onClick={this.onToggle}>
         {this.props.label}
-      </span>
+      </div>
     );
   }
 }
