@@ -8,6 +8,5 @@ export default (
   <Switch>
     <Route path="/profile/write/homework" component={WriteHomework} />
     <Route path="/profile/write/note" component={WriteNote} />
-    <Route path="/profile/write/review" component={Review} />
   </Switch>
 );

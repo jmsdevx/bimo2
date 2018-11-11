@@ -9,6 +9,8 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
+import { transparent } from "material-ui/styles/colors";
+import { isWidthDown } from "@material-ui/core/withWidth";
 
 const styles = {
   card: {
@@ -33,6 +35,23 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "stretch"
+  },
+  textField: {
+    color: "white",
+    backgroundColor: "transparent",
+    border: "3px solid #843ffb",
+    borderRadius: "3%",
+    height: "7vh",
+    width: "20vw",
+    fontSize: "2em",
+    margin: "2vw 1vw 0 0"
+  },
+  searchbtn: {
+    backgroundColor: "#843ffb",
+    color: "#FFFFF",
+    transition: "100s",
+    height: "7vh",
+    margin: "0 0 1vw 0"
   }
 };
 
@@ -180,16 +199,15 @@ class Search extends Component {
         <div id="searchbar">
           <div>
             <label htmlFor="search" />
-            <TextField
+            <input
               id="input"
               label="search"
               type="input"
               className={classes.textField}
-              margin="normal"
-              variant="outlined"
+              autoFocus
               onChange={this.handleChange}
+              placeholder="search..."
             />
-
             {/* <select
               name="type"
               id="type"
@@ -201,7 +219,7 @@ class Search extends Component {
               <option value="antonyms">Antonyms</option>
               <option value="sentences">Sentences</option>
             </select> */}
-            <Button className="submitbtn" onClick={this.handleSubmit}>
+            <Button className={classes.searchbtn} onClick={this.handleSubmit}>
               Search
             </Button>
           </div>

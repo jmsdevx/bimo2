@@ -20,6 +20,7 @@ import axios from "axios";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
+import create from "./create.png";
 
 const highlightPlugin = createHighlightPlugin();
 const drawerWidth = 240;
@@ -46,7 +47,10 @@ const styles = theme => ({
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3
+    padding: theme.spacing.unit * 3,
+    backgroundImage: `url(${create})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center"
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -164,6 +168,7 @@ class PageContainer extends Component {
                     value={this.state.note_title}
                     onChange={e => this.titleChange(e.target.value)}
                     type="text"
+                    autoFocus
                   />
                   <div>
                     <Editor

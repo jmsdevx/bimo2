@@ -4,6 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import writeSubRoutes from "../../../routes/writeSubRoutes";
 import { Link } from "react-router-dom";
+import space from "./space.jpg";
 
 const styles = {
   root: {
@@ -15,7 +16,8 @@ const styles = {
   },
   writecontainer: {
     width: "100%",
-    height: "100%"
+    height: "100%",
+    backgroundImage: `url(${space})`
   }
 };
 
@@ -48,10 +50,6 @@ class CenteredTabs extends React.Component {
           <Link to="/profile/write/homework">
             Homework
             {/* <Tab label="Homework" /> */}
-          </Link>
-          <Link to="/profile/write/review">
-            Review
-            {/* <Tab label="Review" /> */}
           </Link>
           {/* </Tabs> */}
         </Paper>

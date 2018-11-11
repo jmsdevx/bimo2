@@ -8,7 +8,8 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = {
   root: {
-    flexGrow: 1
+    flexGrow: 1,
+    fontSize: "1.7em"
   },
   grow: {
     flexGrow: 1
@@ -18,7 +19,7 @@ const styles = {
     marginRight: 20
   },
   login: {
-    fontColor: "white"
+    color: "white"
   }
 };
 
@@ -29,7 +30,7 @@ function ButtonAppBar(props) {
       <AppBar position="static">
         <Toolbar>
           {/* <LinkBurger className={classes.menuButton} /> */}
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography variant="h4" color="inherit" className={classes.grow}>
             bimo
           </Typography>
           <a

@@ -5,9 +5,22 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { Card } from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core";
+import comet from "../chat/comet.png";
+import Editor from "../../editor/pads/Editor";
 
 const styles = {
-  root: {}
+  chatback: {
+    backgroundImage: `url(${comet})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    height: "100%",
+    width: "100%"
+  },
+  join: {
+    backgroundColor: "white",
+    opacity: "0.8"
+  }
 };
 
 class VideoComponent extends Component {
@@ -173,35 +186,52 @@ class VideoComponent extends Component {
     );
     // Hide 'Join Room' button if user has already joined a room.
     let joinOrLeaveRoomButton = this.state.hasJoinedRoom ? (
-      <Button label="Leave Room" secondary={true} onClick={this.leaveRoom}>
+      <Button
+        label="Leave Room"
+        className={classes.join}
+        secondary={true}
+        onClick={this.leaveRoom}
+      >
         Leave Room
       </Button>
     ) : (
-      <Button label="Join Room" primary={true} onClick={this.joinRoom}>
+      <Button
+        label="Join Room"
+        className={classes.join}
+        primary={true}
+        onClick={this.joinRoom}
+      >
         Join Room
       </Button>
     );
     return (
-      <div className="flex-container">
-        {showLocalTrack}
-        <div className="flex-item">
-          {" "}
-          <TextField
-            id="outlined-with-placeholder"
-            label="Room Name"
-            placeholder="Room Name"
-            className={classes.textField}
-            margin="normal"
-            variant="outlined"
-            onChange={this.handleRoomNameChange}
-            errorText={
-              this.state.roomNameErr ? "Room Name Required" : undefined
-            }
-          />
-          <br />
+      <div className={classes.chatback}>
+        <div className="flex-container">
+          <div className="flex-item">
+            {" "}
+            <div className="flex-side">
+              <TextField
+                id="outlined-with-placeholder"
+                label="Room Name"
+                placeholder="Room Name"
+                className={classes.textField}
+                margin="normal"
+                variant="outlined"
+                onChange={this.handleRoomNameChange}
+                autoFocus
+                errorText={
+                  this.state.roomNameErr ? "Room Name Required" : undefined
+                }
+              />
+              <br />
+            </div>
+            <div className="vids">
+              {showLocalTrack}
+              <div className="flex-item" ref="remoteMedia" id="remote-media" />
+            </div>
+          </div>
           {joinOrLeaveRoomButton}
         </div>
-        <div className="flex-item" ref="remoteMedia" id="remote-media" />
       </div>
     );
   }

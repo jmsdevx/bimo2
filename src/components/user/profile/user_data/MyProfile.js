@@ -11,16 +11,15 @@ import { getUser } from "../../../ducks/user_reducer";
 
 const styles = {
   card: {
-    minWidth: 275,
-    minHeight: "24vh",
+    minWidth: 300,
+    minHeight: "20vh",
     width: "10vw"
   },
   content: {
-    margin: "7vh 0px 0px 0px",
-    
+    margin: "7vh 0px 0px 0px"
   },
   title: {
-    fontSize: 30
+    fontSize: 25
   },
   pos: {
     marginBottom: 12
@@ -102,10 +101,10 @@ class MyProfile extends Component {
               >
                 Name
               </Typography>
-              <Typography variant="h3" component="h2">
-                {this.state.f_name || "Albus"}
+              <Typography variant="h4" component="h2">
+                {this.state.f_name || "Albus Dumbledore"}
                 <br />
-                {this.state.l_name || "Dumbledore"}
+                {this.state.l_name || ""}
               </Typography>
             </CardContent>
           </Card>
@@ -118,10 +117,10 @@ class MyProfile extends Component {
               >
                 Location
               </Typography>
-              <Typography variant="h3" component="h2">
-                {this.state.city || "Hogsmeade"}
+              <Typography variant="h4" component="h2">
+                {this.state.city || "Hogsmeade Village"}
                 <br />
-                {this.state.Country || "Village"}
+                {this.state.Country || ""}
               </Typography>
             </CardContent>
           </Card>
@@ -134,7 +133,7 @@ class MyProfile extends Component {
               >
                 Email
               </Typography>
-              <Typography variant="h3" component="h2">
+              <Typography variant="h4" component="h2">
                 {this.state.email || "Dumbledong@hog.com"}
               </Typography>
             </CardContent>
@@ -149,7 +148,7 @@ class MyProfile extends Component {
               >
                 Language
               </Typography>
-              <Typography variant="h3" component="h2">
+              <Typography variant="h4" component="h2">
                 {this.state.language || "Toad Grumbling"}
               </Typography>
             </CardContent>

@@ -42,12 +42,21 @@ export default class PlayerControls extends React.Component {
         <button onClick={this.props.onVolumeUp}>+</button> */}
         <ul>
           {controls.play &&
-            control(<ReplayIcon id="audio" />, this.props.onPlay)}
+            control(
+              <ReplayIcon color="primary" id="audio" />,
+              this.props.onPlay
+            )}
           {/* {controls.stop && control("Stop", this.props.onStop)} */}
           {controls.pause &&
-            control(<PauseCircleOutlineIcon id="audio" />, this.props.onPause)}
+            control(
+              <PauseCircleOutlineIcon color="primary" id="audio" />,
+              this.props.onPause
+            )}
           {controls.resume &&
-            control(<PlayCircleOutlineIcon id="audio" />, this.props.onResume)}
+            control(
+              <PlayCircleOutlineIcon color="primary" id="audio" />,
+              this.props.onResume
+            )}
         </ul>
         {/* <div>
           Playback Rate:

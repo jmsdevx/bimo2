@@ -10,14 +10,30 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import Editor from "../../editor/pads/Editor";
+import redblast from "./redblast.png";
+import space from "./space.jpg";
 
 const styles = {
   appBar: {
     position: "relative"
   },
+  background: {
+    backgroundImage: `url(${redblast})`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "center"
+  },
   flex: {
     flex: 1,
     alignText: "center"
+  },
+  buttonContainer: {
+    background: "white",
+    opacity: "0.9",
+    margin: "82.5vh 0 0 0 "
+  },
+  dialogback: {
+    backgroundImage: `url(${space})`
   }
 };
 
@@ -41,7 +57,7 @@ class WriteNote extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div>
+      <div className={classes.background}>
         <Button
           className={classes.buttonContainer}
           onClick={this.handleClickOpen}
@@ -54,6 +70,7 @@ class WriteNote extends React.Component {
           open={this.state.open}
           onClose={this.handleClose}
           TransitionComponent={Transition}
+          className={classes.dialogback}
         >
           <AppBar className={classes.appBar}>
             <Toolbar>

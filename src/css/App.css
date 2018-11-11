@@ -3,6 +3,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: "Fira Sans";
 }
 
 a {
@@ -31,14 +32,26 @@ a:hover {
 
 .flex-container {
   display: flex;
-  border: 1px solid green;
+  flex-direction: column;
+  height: 92%;
+  border: 5px solid #843ffb;
   justify-content: space-between;
   padding: 5px;
   margin-top: 8vh;
+  width: 80%;
+  margin: 8vh 0 0 10vw;
+}
+
+.flex-side {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 9vh;
 }
 
 .flex-item {
-  margin: 5px;
+  margin: 0.5vw;
+  height: 65vh;
 }
 
 .flex-item:first-child {
@@ -52,22 +65,32 @@ a:hover {
 }
 
 .flex-item:last-child {
-  background-color: beige;
   flex: 1;
   flex-direction: column;
   overflow-y: scroll;
+  opacity: 1;
+}
+
+.vids {
+  display: flex;
+  flex-direction: row;
 }
 
 #remote-media video {
   width: inherit;
-  height: 200px;
+  height: 30vh;
 }
 
 #searchcontainer {
-  margin: 8vh 0px 0px 0px;
+  margin: 7vh 0px 0px 0px;
   display: flex;
   flex-direction: column;
   width: 100%;
+  background-image: url("http://simpledesktops.com/download/?desktop=5737");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.85;
 }
 
 #searchbar {
@@ -75,6 +98,10 @@ a:hover {
   flex-direction: row;
   width: 100%;
   justify-content: space-evenly;
+}
+
+.searchField {
+  color: white;
 }
 
 .bar {
@@ -85,3 +112,61 @@ a:hover {
   height: 6vw;
   width: 6vw;
 }
+
+.splashback {
+  background-image: url("https://kurzgesagt.org/wp-content/uploads/2018/07/inanutshell-kurzgesagt-string-theory-01.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  width: 100vw;
+}
+
+.splashtitle {
+  color: white;
+}
+
+.splashinfo {
+  color: white;
+  padding: 67vh 0 0 21vw;
+}
+
+.infocolor {
+  background-color: #843ffb;
+  padding: 0.55vw;
+  border-radius: 9999em;
+}
+
+#arrow {
+  float: right;
+  height: 12vw;
+  width: 12vw;
+}
+
+/*
+kurz:
+
+multi box: 
+https://everipedia-storage.s3-accelerate.amazonaws.com/ProfilePics/kurzgesagt-in-a-nutshell__73163.png
+
+space
+https://cdn-images-1.medium.com/max/1600/1*XFx451m2UVWCCdAjL7qA4w.png
+
+realspace
+http://hypeandhyper.com/wp-content/uploads/2014/03/00001_990x433_580x254.jpg
+
+dreaming peng
+https://kurzgesagt.org/wp-content/uploads/2018/07/inanutshell-kurzgesagt-string-theory-01.png
+
+brain
+https://www.sciencealert.com/images/articles/processed/brain-simulation-kurzgesagt-video-vat_600.jpg
+
+ufo
+http://thecrewishere.com/wp-content/uploads/2018/09/if-we-started-today-how-would-we-build-a-moon-base.jpg
+
+astronaut
+http://www.huhmagazine.co.uk/wp-content/uploads/2018/09/moonbase.jpg
+
+sunset
+https://www.universetoday.com/wp-content/uploads/2018/02/Kurzgesagt_Great_Filter-1024x576.jpg
+
+*/
