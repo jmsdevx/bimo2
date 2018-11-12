@@ -38,14 +38,14 @@ export const mainListItems = (
         <ListItemText primary="Notes" />
       </ListItem>
     </Link>
-    <Link to="/profile/notes">
+    {/* <Link to="/profile/vocabulary">
       <ListItem button>
         <ListItemIcon>
           <TranslateIcon />
         </ListItemIcon>
         <ListItemText primary="Vocabulary" />
       </ListItem>
-    </Link>
+    </Link> */}
     <Link to="/profile/chat">
       <ListItem button>
         <ListItemIcon>

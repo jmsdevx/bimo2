@@ -17,6 +17,9 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./user_data/ListIcons";
 import profSubRoutes from "../../../routes/profSubRoutes";
 import space from "../write/space.jpg";
+import axios from "axios";
+import { connect } from "react-redux";
+import { getUser } from "../../ducks/user_reducer";
 
 const drawerWidth = 250;
 
@@ -98,8 +101,45 @@ class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      open: true
+      open: true,
+      profile: [],
+      auth_id: [],
+      recent: []
     };
+  }
+
+  async componentDidMount() {
+    await this.props.getUser();
+
+    this.setProfile();
+  }
+
+  setProfile() {
+    this.setState({ profile: this.props.state.user_reducer.user }, () =>
+      this.drill()
+    );
+  }
+
+  drill() {
+    console.log(this.state.profile);
+    this.state.profile.map((e, i) => {
+      return this.setState(
+        {
+          auth_id: e.auth_id
+        },
+        () => this.getRecent(this.state.auth_id)
+      );
+    });
+  }
+
+  getRecent(auth_id) {
+    console.log(auth_id);
+    axios
+      .get(`/api/profile/recent/${auth_id}`)
+      .then(response => {
+        return this.setState({ recent: response.data });
+      })
+      .catch(e => console.log(e));
   }
 
   handleDrawerOpen = () => {
@@ -112,6 +152,11 @@ class Profile extends Component {
 
   render() {
     const { classes } = this.props;
+    let recents = this.state.recent.filter((e, i) => {
+      console.log("e: " + e);
+      return e.auth_id === this.state.auth_id ? e : null;
+    });
+    console.log("r: " + recents);
     return (
       <div>
         <div className={classes.root}>
@@ -173,6 +218,7 @@ class Profile extends Component {
             <List>{mainListItems}</List>
             <Divider />
             <List>{secondaryListItems}</List>
+            <Divider />
           </Drawer>
           {profSubRoutes}
         </div>
@@ -185,4 +231,13 @@ Profile.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Profile);
+function mapStatetoProps(state) {
+  return { state };
+}
+
+export default withStyles(styles)(
+  connect(
+    mapStatetoProps,
+    { getUser }
+  )(Profile)
+);

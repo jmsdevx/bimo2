@@ -50,5 +50,15 @@ module.exports = {
         res.status(200).send(response);
       })
       .catch(e => res.status(500).send(e));
+  },
+  getRecent: (req, res) => {
+    const dbInstance = req.app.get("db");
+    const { auth_id } = req.params;
+    dbInstance
+      .get_recent(`${auth_id}`)
+      .then(response => {
+        res.status(200).send(response);
+      })
+      .catch(e => res.status(500).send(e));
   }
 };

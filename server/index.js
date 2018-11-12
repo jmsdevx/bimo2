@@ -18,13 +18,17 @@ const {
   addNote,
   editNote,
   getAllNotes,
-  deleteNote
+  deleteNote,
+  getRecent
 } = require("./controllers/noteCtrl");
 const { getSearch } = require("./controllers/searchCtrl");
 
 //basic
 app.use(json());
 app.use(cors());
+
+//join
+app.get("/api/profile/recent/:id", getRecent);
 
 //write
 app.post("/api/write/note", addNote);
