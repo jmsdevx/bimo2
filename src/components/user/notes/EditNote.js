@@ -9,18 +9,18 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-import { EditorState, RichUtils, convertToRaw } from "draft-js";
+import { EditorState, RichUtils, convertToRaw, convertFromRaw } from "draft-js";
 import Editor from "draft-js-plugins-editor";
-import createHighlightPlugin from "../plugins/highlightPlugin";
-import addLinkPlugin from "../plugins/addLinkPlugin";
+import createHighlightPlugin from "../../editor/plugins/highlightPlugin";
+import addLinkPlugin from "../../editor/plugins/addLinkPlugin";
 import BlockStyleToolbar, {
   getBlockStyle
-} from "../blockstyles/BlockStyleToolbar";
+} from "../../editor/blockstyles/BlockStyleToolbar";
 import axios from "axios";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import hex from "./hex.jpg";
+import create from "../write/create.png";
 
 const highlightPlugin = createHighlightPlugin();
 const drawerWidth = 240;
@@ -48,8 +48,7 @@ const styles = theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3,
-    backgroundImage: `url(${hex})`,
-    backgroundRepeat: "no-repeat",
+    backgroundImage: `url(${create})`,
     backgroundSize: "cover",
     backgroundPosition: "center"
   },
@@ -59,23 +58,22 @@ const styles = theme => ({
   }
 });
 
-class PageContainer extends Component {
+class EditNote extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createEmpty(),
+      //   editorState: EditorState.createEmpty(),
+      editorState: EditorState.createWithContent(
+        convertFromRaw(this.props.note_content)
+      ),
+      note: [],
       displayedNote: "new",
-      note_title: "My Homework",
-      note_type: "homework",
-      note_id: "",
-      check: false
+      note_title: this.props.note_title,
+      note_id: this.props.note_id,
+      note_type: "note"
     };
     this.onChange = editorState => this.setState({ editorState });
     this.plugins = [highlightPlugin, addLinkPlugin];
-  }
-
-  componentDidMount() {
-    this.setState({ check: false });
   }
 
   submitEditor = () => {
@@ -83,25 +81,13 @@ class PageContainer extends Component {
     let note = { content: convertToRaw(contentState) };
     let note_content = JSON.stringify(note.content);
     const { note_id, note_title } = this.state;
-    console.log(this.props.auth_id);
-    this.state.check
-      ? axios
-          .put(`/api/write/homework/${note_id}`, {
-            note_title: note_title,
-            note_content: note_content
-          })
-          .then(response => console.log(response))
-      : axios
-          .post(`/api/write/homework`, {
-            note_title: note_title,
-            note_content: note_content,
-            auth_id: this.props.auth_id,
-            note_type: "homework"
-          })
-          .then(response => {
-            console.log(response.data[0].max);
-            this.setState({ check: true, note_id: response.data[0].max });
-          });
+
+    axios
+      .put(`/api/write/note/${note_id}`, {
+        note_title: note_title,
+        note_content: note_content
+      })
+      .then(response => console.log(response));
   };
 
   finishEditor = () => {
@@ -109,34 +95,13 @@ class PageContainer extends Component {
     let note = { content: convertToRaw(contentState) };
     let note_content = JSON.stringify(note.content);
     const { note_id, note_title } = this.state;
-    console.log(this.props.auth_id);
-    this.state.check
-      ? axios
-          .put(`/api/write/homework/${note_id}`, {
-            note_title: note_title,
-            note_content: note_content
-          })
-          .then(this.props.handleClose)
-      : axios
-          .post(`/api/write/homework`, {
-            note_title: note_title,
-            note_content: note_content,
-            auth_id: this.props.auth_id,
-            note_type: "note"
-          })
-          .then(this.props.handleClose);
-  };
 
-  handleKeyCommand = command => {
-    const newState = RichUtils.handleKeyCommand(
-      this.state.editorState,
-      command
-    );
-    if (newState) {
-      this.onChange(newState);
-      return "handled";
-    }
-    return "not-handled";
+    axios
+      .put(`/api/write/note/${note_id}`, {
+        note_title: note_title,
+        note_content: note_content
+      })
+      .then(response => this.props.handleClose);
   };
 
   onUnderlineClick = () => {
@@ -204,14 +169,13 @@ class PageContainer extends Component {
                 <div>
                   <TextField
                     id="outlined-with-placeholder"
-                    label="Homework Title"
+                    label="Note Title"
                     className={classes.textField}
                     margin="normal"
                     variant="outlined"
-                    value={this.state.note_title}
+                    value={this.props.note_title}
                     onChange={e => this.titleChange(e.target.value)}
                     type="text"
-                    autoFocus
                   />
                   <div>
                     <Editor
@@ -220,6 +184,7 @@ class PageContainer extends Component {
                       onChange={this.onChange}
                       handleKeyCommand={this.handleKeyCOmmand}
                       plugins={this.plugins}
+                      autoFocus
                     />
                   </div>
                 </div>
@@ -294,4 +259,4 @@ class PageContainer extends Component {
   }
 }
 
-export default withStyles(styles)(PageContainer);
+export default withStyles(styles)(EditNote);

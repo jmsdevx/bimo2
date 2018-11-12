@@ -12,6 +12,8 @@ import Slide from "@material-ui/core/Slide";
 import HomeworkEditor from "../../editor/pads/HomeworkEditor";
 import whiteblast from "./whiteblast.jpg";
 import space from "./space.jpg";
+import { connect } from "react-redux";
+import { getUser } from "../../ducks/user_reducer";
 
 const styles = {
   appBar: {
@@ -42,9 +44,35 @@ function Transition(props) {
 }
 
 class WriteHomework extends React.Component {
-  state = {
-    open: false
-  };
+  constructor(props) {
+    super();
+    this.state = {
+      open: false,
+      profile: [],
+      auth_id: ""
+    };
+  }
+
+  async componentDidMount() {
+    await this.props.getUser();
+    this.setProfile();
+  }
+
+  setProfile() {
+    this.setState({ profile: this.props.state.user_reducer.user }, () =>
+      this.drill()
+    );
+  }
+
+  drill() {
+    console.log(this.state.profile);
+    this.state.profile.map((e, i) => {
+      return this.setState({
+        auth_id: e.auth_id
+      });
+    });
+    console.log(this.state.auth_id);
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -90,7 +118,10 @@ class WriteHomework extends React.Component {
             </Toolbar>
           </AppBar>
           {/* <Editor /> */}
-          <HomeworkEditor />
+          <HomeworkEditor
+            auth_id={this.state.auth_id}
+            handleClose={this.handleClose}
+          />
         </Dialog>
       </div>
     );
@@ -101,4 +132,13 @@ WriteHomework.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(WriteHomework);
+function mapStatetoProps(state) {
+  return { state };
+}
+
+export default withStyles(styles)(
+  connect(
+    mapStatetoProps,
+    { getUser }
+  )(WriteHomework)
+);

@@ -14,11 +14,27 @@ const VideoGrant = AccessToken.VideoGrant;
 const faker = require("faker");
 
 //controllers
+const {
+  addNote,
+  editNote,
+  getAllNotes,
+  deleteNote
+} = require("./controllers/noteCtrl");
 const { getSearch } = require("./controllers/searchCtrl");
 
 //basic
 app.use(json());
 app.use(cors());
+
+//write
+app.post("/api/write/note", addNote);
+app.put("/api/write/note/:id", editNote);
+app.post("/api/write/homework", addNote);
+app.put("/api/write/homework/:id", editNote);
+
+//notes
+app.get("/api/notes/all/:id", getAllNotes);
+app.delete("/api/notes/all/:id", deleteNote);
 
 //search
 app.post("/api/search", getSearch);

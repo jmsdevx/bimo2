@@ -64,24 +64,82 @@ class PageContainer extends Component {
     this.state = {
       editorState: EditorState.createEmpty(),
       displayedNote: "new",
-      note_title: "My Note"
+      note_title: "My Note",
+      note_type: "note",
+      note_id: "",
+      check: false
     };
     this.onChange = editorState => this.setState({ editorState });
     this.plugins = [highlightPlugin, addLinkPlugin];
   }
 
+  componentDidMount() {
+    this.setState({ check: false });
+  }
+
+  //simple post submit
+  // submitEditor = () => {
+  //   let contentState = this.state.editorState.getCurrentContent();
+  //   let note = { content: convertToRaw(contentState) };
+  //   console.log(note);
+  //   let note_content = JSON.stringify(note.content);
+  //   const { email, note_title } = this.state;
+  //   axios.post("/api/homework", {
+  //     email: email,
+  //     note_content: note_content,
+  //     note_title: note_title
+  //   });
+  //   //   .then(this.props.history.push(``));
+  // };
+
+  //conditional (draft based) submit
   submitEditor = () => {
     let contentState = this.state.editorState.getCurrentContent();
     let note = { content: convertToRaw(contentState) };
-    console.log(note);
     let note_content = JSON.stringify(note.content);
-    const { email, note_title } = this.state;
-    axios.post("/api/homework", {
-      email: email,
-      note_content: note_content,
-      note_title: note_title
-    });
-    //   .then(this.props.history.push(``));
+    const { note_id, note_title } = this.state;
+    console.log(this.props.auth_id);
+    this.state.check
+      ? axios
+          .put(`/api/write/note/${note_id}`, {
+            note_title: note_title,
+            note_content: note_content
+          })
+          .then(response => console.log(response))
+      : axios
+          .post(`/api/write/note`, {
+            note_title: note_title,
+            note_content: note_content,
+            auth_id: this.props.auth_id,
+            note_type: "note"
+          })
+          .then(response => {
+            console.log(response.data[0].max);
+            this.setState({ check: true, note_id: response.data[0].max });
+          });
+  };
+
+  finishEditor = () => {
+    let contentState = this.state.editorState.getCurrentContent();
+    let note = { content: convertToRaw(contentState) };
+    let note_content = JSON.stringify(note.content);
+    const { note_id, note_title } = this.state;
+    console.log(this.props.auth_id);
+    this.state.check
+      ? axios
+          .put(`/api/write/note/${note_id}`, {
+            note_title: note_title,
+            note_content: note_content
+          })
+          .then(this.props.handleClose)
+      : axios
+          .post(`/api/write/note`, {
+            note_title: note_title,
+            note_content: note_content,
+            auth_id: this.props.auth_id,
+            note_type: "note"
+          })
+          .then(this.props.handleClose);
   };
 
   handleKeyCommand = command => {
@@ -235,7 +293,15 @@ class PageContainer extends Component {
             onClick={this.submitEditor}
             className={classes.button}
           >
-            Save
+            save
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={this.finishEditor}
+            className={classes.button}
+          >
+            finish
           </Button>
         </Drawer>
       </div>

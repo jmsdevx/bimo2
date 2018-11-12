@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import writeSubRoutes from "../../../routes/writeSubRoutes";
+import noteSubRoutes from "../../../routes/noteSubRoutes";
 import { Link } from "react-router-dom";
-import space from "./space.jpg";
+import space from "../write/space.jpg";
 
 const styles = {
   root: {
@@ -21,7 +21,7 @@ const styles = {
   }
 };
 
-class Write extends React.Component {
+class Notes extends React.Component {
   state = {
     value: 0
   };
@@ -43,24 +43,28 @@ class Write extends React.Component {
             textColor="primary"
             centered
           > */}
-          <Link to="/profile/write/note">
-            Note
+          <Link to="/profile/notes/all">
+            All
             {/* <Tab textColor="secondary" label="Note" /> */}
           </Link>
-          <Link to="/profile/write/homework">
-            Homework
+          <Link to="/profile/notes/notes">
+            Notes
+            {/* <Tab label="Homework" /> */}
+          </Link>
+          <Link to="/profile/notes/homeworks">
+            Homeworks
             {/* <Tab label="Homework" /> */}
           </Link>
           {/* </Tabs> */}
         </Paper>
-        {writeSubRoutes}
+        {noteSubRoutes}
       </div>
     );
   }
 }
 
-Write.propTypes = {
+Notes.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Write);
+export default withStyles(styles)(Notes);

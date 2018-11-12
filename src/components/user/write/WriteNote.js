@@ -12,6 +12,8 @@ import Slide from "@material-ui/core/Slide";
 import Editor from "../../editor/pads/Editor";
 import redblast from "./redblast.png";
 import space from "./space.jpg";
+import { connect } from "react-redux";
+import { getUser } from "../../ducks/user_reducer";
 
 const styles = {
   appBar: {
@@ -42,9 +44,35 @@ function Transition(props) {
 }
 
 class WriteNote extends React.Component {
-  state = {
-    open: false
-  };
+  constructor(props) {
+    super();
+    this.state = {
+      open: false,
+      profile: [],
+      auth_id: ""
+    };
+  }
+
+  async componentDidMount() {
+    await this.props.getUser();
+    this.setProfile();
+  }
+
+  setProfile() {
+    this.setState({ profile: this.props.state.user_reducer.user }, () =>
+      this.drill()
+    );
+  }
+
+  drill() {
+    console.log(this.state.profile);
+    this.state.profile.map((e, i) => {
+      return this.setState({
+        auth_id: e.auth_id
+      });
+    });
+    console.log(this.state.auth_id);
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -82,15 +110,12 @@ class WriteNote extends React.Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" className={classes.flex}>
-                NOTE TITLE
+                write a note
               </Typography>
-              <Button color="inherit" onClick={this.handleClose}>
-                save
-              </Button>
             </Toolbar>
           </AppBar>
           {/* <Editor /> */}
-          <Editor />
+          <Editor auth_id={this.state.auth_id} handleClose={this.handleClose} />
         </Dialog>
       </div>
     );
@@ -101,4 +126,13 @@ WriteNote.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(WriteNote);
+function mapStatetoProps(state) {
+  return { state };
+}
+
+export default withStyles(styles)(
+  connect(
+    mapStatetoProps,
+    { getUser }
+  )(WriteNote)
+);

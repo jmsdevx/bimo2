@@ -67,6 +67,7 @@ class MyProfile extends Component {
         email: e.email
       });
     });
+    console.log(this.state.auth_id);
   }
   render() {
     const { classes } = this.props;
