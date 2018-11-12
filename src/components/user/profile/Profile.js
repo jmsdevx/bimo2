@@ -20,6 +20,11 @@ import space from "../write/space.jpg";
 import axios from "axios";
 import { connect } from "react-redux";
 import { getUser } from "../../ducks/user_reducer";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import AssignmentIcon from "@material-ui/icons/Assignment";
 
 const drawerWidth = 250;
 
@@ -104,7 +109,8 @@ class Profile extends Component {
       open: true,
       profile: [],
       auth_id: [],
-      recent: []
+      recent: [],
+      f_name: "Someone"
     };
   }
 
@@ -125,7 +131,8 @@ class Profile extends Component {
     this.state.profile.map((e, i) => {
       return this.setState(
         {
-          auth_id: e.auth_id
+          auth_id: e.auth_id,
+          f_name: e.f_name
         },
         () => this.getRecent(this.state.auth_id)
       );
@@ -153,10 +160,23 @@ class Profile extends Component {
   render() {
     const { classes } = this.props;
     let recents = this.state.recent.filter((e, i) => {
-      console.log("e: " + e);
-      return e.auth_id === this.state.auth_id ? e : null;
+      console.log("e" + e.auth_id);
+      console.log(this.state.auth_id);
+      return e.auth_id === this.state.auth_id;
     });
-    console.log("r: " + recents);
+    let recentdisplay = recents.map((e, i) => {
+      return (
+        <div key={i}>
+          <ListItem button>
+            <ListItemIcon>
+              <AssignmentIcon />
+            </ListItemIcon>
+            <ListItemText primary={e.note_title} />
+          </ListItem>
+        </div>
+      );
+    });
+
     return (
       <div>
         <div className={classes.root}>
@@ -190,7 +210,7 @@ class Profile extends Component {
                 noWrap
                 className={classes.title}
               >
-                Profile {this.state.f_name} {this.state.l_name}
+                Profile
               </Typography>
               <IconButton color="inherit">
                 <Badge badgeContent={4} color="secondary">
@@ -217,7 +237,14 @@ class Profile extends Component {
             <Divider />
             <List>{mainListItems}</List>
             <Divider />
-            <List>{secondaryListItems}</List>
+            <List>
+              <ListSubheader inset>
+                {this.state.f_name}
+                's Notes
+              </ListSubheader>
+              {recentdisplay}
+              {/* {secondaryListItems} */}
+            </List>
             <Divider />
           </Drawer>
           {profSubRoutes}

@@ -24,7 +24,7 @@ const styles = {
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
-    opacity: "0.9"
+    opacity: "1"
   },
   flex: {
     flex: 1,
