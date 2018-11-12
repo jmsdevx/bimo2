@@ -72,7 +72,7 @@ class AllText extends Component {
     this.setProfile();
   }
 
-  async componentDidUpdate() {
+  componentDidUpdate() {
     this.getAllNotes();
   }
 
@@ -127,7 +127,7 @@ class AllText extends Component {
     const { classes } = this.props;
     let notesdisplay = this.state.notes.map((e, i) => {
       return (
-        <div key={i} className={classes.root}>
+        <div key={e.note_id} className={classes.root}>
           <ExpansionPanel>
             <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
               <div className={classes.column}>
@@ -183,6 +183,7 @@ class AllText extends Component {
               </Toolbar>
             </AppBar>
             {/* <Editor /> */}
+            {console.log("map " + e.note_id)}
             <EditNote
               auth_id={this.state.auth_id}
               note_content={e.note_content}

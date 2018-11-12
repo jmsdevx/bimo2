@@ -16,13 +16,15 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./user_data/ListIcons";
 import profSubRoutes from "../../../routes/profSubRoutes";
+import space from "../write/space.jpg";
 
 const drawerWidth = 250;
 
 const styles = theme => ({
   root: {
     display: "flex",
-    height: "100vh"
+    height: "100vh",
+    backgroundImage: `url(${space})`
   },
   toolbar: {
     paddingRight: 24 // keep right padding when drawer closed

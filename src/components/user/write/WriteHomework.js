@@ -23,14 +23,15 @@ const styles = {
     backgroundImage: `url(${whiteblast})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    backgroundPosition: "center"
+    backgroundPosition: "center",
+    opacity: "0.9"
   },
   flex: {
     flex: 1,
     alignText: "center"
   },
   buttonContainer: {
-    background: "white",
+    background: "#843ffb",
     opacity: "0.9",
     margin: "82.5vh 0 0 0 "
   },

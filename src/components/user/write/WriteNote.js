@@ -23,15 +23,16 @@ const styles = {
     backgroundImage: `url(${redblast})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    backgroundPosition: "center"
+    backgroundPosition: "center",
+    opacity: "0.9"
   },
   flex: {
     flex: 1,
     alignText: "center"
   },
   buttonContainer: {
-    background: "white",
-    opacity: "0.9",
+    background: "#843ffb",
+    opacity: "1",
     margin: "82.5vh 0 0 0 "
   },
   dialogback: {

@@ -15,11 +15,12 @@ const styles = {
     backgroundSize: "cover",
     backgroundPosition: "center",
     height: "100%",
-    width: "100%"
+    width: "100%",
+    opacity: "1"
   },
   join: {
     backgroundColor: "white",
-    opacity: "0.8"
+    opacity: "1"
   }
 };
 

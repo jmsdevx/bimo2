@@ -7,12 +7,12 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Coffee from "../Coffee.mp4";
-import beam from "./beam.jpg";
+import mountains from "./mountains.png";
 
 const styles = {
   card: {
     maxWidth: "100%",
-    height: "45vh"
+    height: "25vh"
   },
   media: {
     objectFit: "cover",
@@ -26,10 +26,11 @@ const styles = {
     height: "100%"
   },
   brain: {
-    backgroundImage: `url(${beam})`,
+    backgroundImage: `url(${mountains})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
-    height: "50vh"
+    height: "50vh",
+    opacity: "0.6"
   }
 };
 

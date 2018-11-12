@@ -14,10 +14,11 @@ import { isWidthDown } from "@material-ui/core/withWidth";
 
 const styles = {
   card: {
-    minWidth: "70vw",
+    maxWidth: "30vw",
+    midWidth: "30vw",
     textAlign: "center",
-    alignItems: "stretch",
-    margin: "0 4vw 0 4vw",
+
+    margin: "1vw",
     minHeight: "8vh"
   },
   bullet: {
@@ -52,6 +53,14 @@ const styles = {
     transition: "100s",
     height: "7vh",
     margin: "0 0 1vw 0"
+  },
+  cardcontainer: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    margin: "1vw 0 0 2.5vw",
+    justifyContent: "center"
   }
 };
 
@@ -231,7 +240,7 @@ class Search extends Component {
         <div className={classes.results}>
           {/* <div>{lexCatDisplay}</div>
           <div>{defsDisplay}</div> */}
-          {cardFactory}
+          <div className={classes.cardcontainer}>{cardFactory}</div>
         </div>
       </div>
     );

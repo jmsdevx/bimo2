@@ -72,6 +72,10 @@ class EditNote extends Component {
       note_id: this.props.note_id,
       note_type: "note"
     };
+    console.log(this.props.note_title);
+    console.log(this.state.note_title);
+    console.log("props" + this.props.note_id);
+    console.log("construct" + this.state.note_id);
     this.onChange = editorState => this.setState({ editorState });
     this.plugins = [highlightPlugin, addLinkPlugin];
   }
@@ -101,7 +105,7 @@ class EditNote extends Component {
         note_title: note_title,
         note_content: note_content
       })
-      .then(response => this.props.handleClose);
+      .then(this.props.handleClose);
   };
 
   onUnderlineClick = () => {
@@ -173,7 +177,7 @@ class EditNote extends Component {
                     className={classes.textField}
                     margin="normal"
                     variant="outlined"
-                    value={this.props.note_title}
+                    value={this.state.note_title}
                     onChange={e => this.titleChange(e.target.value)}
                     type="text"
                   />
@@ -184,7 +188,6 @@ class EditNote extends Component {
                       onChange={this.onChange}
                       handleKeyCommand={this.handleKeyCOmmand}
                       plugins={this.plugins}
-                      autoFocus
                     />
                   </div>
                 </div>
