@@ -8,15 +8,18 @@ import GridList from "@material-ui/core/GridList";
 import ProfileSplash from "./ProfileSplash";
 import { connect } from "react-redux";
 import { getUser } from "../../../ducks/user_reducer";
+import ponder from "./ponder.png";
+import Switch from "@material-ui/core/Switch";
+import Paper from "@material-ui/core/Paper";
+import Zoom from "@material-ui/core/Zoom";
 
 const styles = {
   card: {
-    minWidth: 300,
-    minHeight: "20vh",
-    width: "10vw"
+    width: "100vw",
+    height: "10vh"
   },
   content: {
-    margin: "7vh 0px 0px 0px"
+    margin: "0vh 0px 0px 0px"
   },
   title: {
     fontSize: 25
@@ -26,9 +29,21 @@ const styles = {
   },
   gridList: {
     display: "flex",
-    flexWrap: "nowrap",
-    justifyContent: "space-around",
-    overflow: "hidden"
+    overflow: "hidden",
+    flexDirection: "column"
+  },
+  background: {
+    backgroundImage: `url(${ponder})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    height: "100vh",
+    width: "90vw",
+    opacity: "1",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center"
   }
 };
 
@@ -43,7 +58,8 @@ class MyProfile extends Component {
       email: "",
       country: "",
       language: "",
-      age: ""
+      age: "",
+      check: false
     };
   }
 
@@ -69,30 +85,42 @@ class MyProfile extends Component {
     });
     console.log(this.state.auth_id);
   }
+
+  handleChange = () => {
+    this.setState(state => ({ checked: !state.checked }));
+  };
+
   render() {
     const { classes } = this.props;
+    const { checked } = this.state;
     return (
-      <div>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Typography variant="h4" gutterBottom component="h2">
-            {this.state.profile !== [] ? (
-              <ProfileSplash f_name={this.state.f_name} />
-            ) : (
-              <h1>Loading!</h1>
-            )}
-          </Typography>
-          <Typography component="div" className={classes.chartContainer}>
-            {/*make subroutes here*/}
-          </Typography>
-        </main>
-        <GridList
-          container
-          direction="row"
-          justify="space-around"
-          alignItems="stretch"
-          className="classes.gridlist"
-        >
+      <div className={classes.background}>
+        <Zoom in={!checked} style={{ transitionDelay: !checked ? 500 : 0 }}>
+          <h1 id="get">The secret of getting ahead</h1>
+        </Zoom>
+        <Zoom in={!checked} style={{ transitionDelay: !checked ? 1300 : 0 }}>
+          <h1 id="start">is getting started.</h1>
+        </Zoom>
+        <div>
+          <br />
+          <br />
+          <Zoom in={!checked} style={{ transitionDelay: !checked ? 2200 : 0 }}>
+            <h1 id="name">-Mark Twain</h1>
+          </Zoom>
+          <Switch
+            checked={checked}
+            color="primary"
+            onChange={this.handleChange}
+            aria-label="Collapse"
+          />
+          <Zoom in={checked} style={{ transitionDelay: checked ? 750 : 0 }}>
+            <h1 id="what">What will you build...</h1>
+          </Zoom>
+          <Zoom in={checked} style={{ transitionDelay: checked ? 1500 : 0 }}>
+            <h1 id="yourname">{this.state.f_name}?</h1>
+          </Zoom>
+        </div>
+        {/* <div className={classes.gridList}>
           <Card className={classes.card}>
             <CardContent>
               <Typography
@@ -153,8 +181,8 @@ class MyProfile extends Component {
                 {this.state.language || "Toad Grumbling"}
               </Typography>
             </CardContent>
-          </Card>
-        </GridList>
+          </Card> */}
+        {/* </div> */}
       </div>
     );
   }

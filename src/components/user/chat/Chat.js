@@ -7,10 +7,11 @@ import { Card } from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core";
 import comet from "../chat/comet.png";
 import Editor from "../../editor/pads/Editor";
+import alienhex from "../profile/user_data/alienhex.png";
 
 const styles = {
   chatback: {
-    backgroundImage: `url(${comet})`,
+    backgroundImage: `url(${alienhex})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",

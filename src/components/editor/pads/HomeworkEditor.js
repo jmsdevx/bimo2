@@ -51,7 +51,8 @@ const styles = theme => ({
     backgroundImage: `url(${hex})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    backgroundPosition: "center"
+    backgroundPosition: "center",
+    borderRadius: "2em"
   },
   textField: {
     marginLeft: theme.spacing.unit,
@@ -122,7 +123,7 @@ class PageContainer extends Component {
             note_title: note_title,
             note_content: note_content,
             auth_id: this.props.auth_id,
-            note_type: "note"
+            note_type: "homework"
           })
           .then(this.props.handleClose);
   };

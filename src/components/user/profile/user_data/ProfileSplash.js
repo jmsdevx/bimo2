@@ -8,29 +8,16 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import Coffee from "../Coffee.mp4";
 import mountains from "./mountains.png";
+import ponder from "./ponder.png";
+import { isAbsolute } from "path";
 
 const styles = {
-  card: {
-    maxWidth: "100%",
-    height: "25vh"
-  },
-  media: {
-    objectFit: "cover",
-    position: "absolute",
-    zIndex: 0
-  },
-  welcome: {
-    color: "white",
-    zIndex: 1,
-    position: "relative",
-    height: "100%"
-  },
   brain: {
-    backgroundImage: `url(${mountains})`,
+    backgroundImage: `url(${ponder})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
-    height: "50vh",
-    opacity: "0.6"
+    height: "80vh",
+    opacity: "1"
   }
 };
 

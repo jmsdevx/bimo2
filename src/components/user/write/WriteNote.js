@@ -14,13 +14,14 @@ import redblast from "./redblast.png";
 import space from "./space.jpg";
 import { connect } from "react-redux";
 import { getUser } from "../../ducks/user_reducer";
+import popsicle from "../profile/user_data/popsicle_adventure_1.png";
 
 const styles = {
   appBar: {
     position: "relative"
   },
   background: {
-    backgroundImage: `url(${redblast})`,
+    backgroundImage: `url(${popsicle})`,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",

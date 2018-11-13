@@ -20,11 +20,13 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import EditNote from "./EditNote";
+import moonlight from "../profile/user_data/2D_moonlight.png";
 
 const styles = theme => ({
   root: {
     width: "80%",
-    margin: ".5vh 0 0 10vw"
+    margin: ".5vh 0 0 10vw",
+    backgroundImage: `url(${moonlight})`
   },
   heading: {
     fontSize: theme.typography.pxToRem(15)
