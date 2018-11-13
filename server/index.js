@@ -19,7 +19,8 @@ const {
   editNote,
   getAllNotes,
   deleteNote,
-  getRecent
+  getRecent,
+  getNote
 } = require("./controllers/noteCtrl");
 const { getSearch } = require("./controllers/searchCtrl");
 
@@ -35,6 +36,7 @@ app.post("/api/write/note", addNote);
 app.put("/api/write/note/:id", editNote);
 app.post("/api/write/homework", addNote);
 app.put("/api/write/homework/:id", editNote);
+app.get("/api/write/results/:id", getNote);
 
 //notes
 app.get("/api/notes/all/:id", getAllNotes);

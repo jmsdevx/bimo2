@@ -60,5 +60,16 @@ module.exports = {
         res.status(200).send(response);
       })
       .catch(e => res.status(500).send(e));
+  },
+  getNote: (req, res) => {
+    const dbInstance = req.app.get("db");
+    const { note_id } = req.params;
+    console.log(note_id);
+    dbInstance
+      .get_note(note_id)
+      .then(response => {
+        res.status(200).send(response);
+      })
+      .catch(e => res.status(500).send(e));
   }
 };

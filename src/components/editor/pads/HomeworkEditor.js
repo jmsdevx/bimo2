@@ -21,6 +21,7 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import hex from "./hex.jpg";
+import Results from "../../user/write/Results";
 
 const highlightPlugin = createHighlightPlugin();
 const drawerWidth = 240;
@@ -100,8 +101,9 @@ class PageContainer extends Component {
             note_type: "homework"
           })
           .then(response => {
-            console.log(response.data[0].max);
+            // console.log(response.data[0].max);
             this.setState({ check: true, note_id: response.data[0].max });
+            console.log(this.state.note_id);
           });
   };
 
@@ -194,6 +196,8 @@ class PageContainer extends Component {
 
   render() {
     const { classes } = this.props;
+    let note_id_prop = this.state.note_id;
+    console.log(note_id_prop);
     return (
       <div className={classes.root}>
         <CssBaseline />
@@ -289,6 +293,7 @@ class PageContainer extends Component {
           >
             finish
           </Button>
+          <Results note_id={note_id_prop} />
         </Drawer>
       </div>
     );

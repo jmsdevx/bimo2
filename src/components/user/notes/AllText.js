@@ -74,10 +74,6 @@ class AllText extends Component {
     this.setProfile();
   }
 
-  componentDidUpdate() {
-    this.getAllNotes();
-  }
-
   setProfile() {
     this.setState({ profile: this.props.state.user_reducer.user }, () =>
       this.drill()
@@ -111,7 +107,7 @@ class AllText extends Component {
     axios
       .delete(`/api/notes/all/${id}`, { auth_id: this.state.auth_id })
       .then(response => {
-        console.log(response);
+        this.getAllNotes();
         // this.setState({ notes: response.data });
       })
       .catch(error => console.log(error));
@@ -122,7 +118,7 @@ class AllText extends Component {
   };
 
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState({ open: false }, () => this.getAllNotes());
   };
 
   render() {
