@@ -20,7 +20,6 @@ import axios from "axios";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import create from "./create.png";
 import burger from "../../user/profile/user_data/burger.png";
 
 const highlightPlugin = createHighlightPlugin();

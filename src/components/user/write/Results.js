@@ -124,7 +124,8 @@ class Results extends React.Component {
             <Typography variant="h6" id="modal-title">
               Errors:
             </Typography>
-            <ErrorTable />
+            <Typography variant="p">{this.state.content}</Typography>
+            <ErrorTable errors={this.state.errors} />
 
             <ResultsModalWrapped />
           </div>
