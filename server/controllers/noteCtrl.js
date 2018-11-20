@@ -63,10 +63,10 @@ module.exports = {
   },
   getNote: (req, res) => {
     const dbInstance = req.app.get("db");
-    const { note_id } = req.params;
-    console.log(note_id);
+    const { id } = req.params;
+    console.log("controller " + id);
     dbInstance
-      .get_note(note_id)
+      .get_note(id)
       .then(response => {
         res.status(200).send(response);
       })

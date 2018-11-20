@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
+import ErrorTable from "./ErrorTable";
 
 function rand() {
   return Math.round(Math.random() * 20) - 10;
@@ -24,14 +25,14 @@ function getModalStyle() {
 const styles = theme => ({
   paper: {
     position: "absolute",
-    width: theme.spacing.unit * 50,
+    width: theme.spacing.unit * 150,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing.unit * 4
   },
   resultsContainer: {
     textAlign: "center",
-    margin: "4vh 0 0 0"
+    margin: "10vh 0 0 0"
   }
 });
 
@@ -67,16 +68,17 @@ class Results extends React.Component {
 
   drill() {
     console.log(this.state.homework[0]);
-    //     let alltext = this.state.homework[0].note_content.blocks.map(
-    //       (e, i) => e.text
-    //     );
-    //     let newtext = alltext.join(" ");
-    //     this.setState({ content: newtext, check: !this.state.check }, () =>
-    //       this.getResults()
-    //     );
+    let alltext = this.state.homework[0].note_content.blocks.map(
+      (e, i) => e.text
+    );
+    let newtext = alltext.join(" ");
+    this.setState({ content: newtext, check: !this.state.check }, () =>
+      this.getResults()
+    );
   }
 
   getResults() {
+    console.log(this.state.content);
     axios
       .post(
         `https://api.textgears.com/check.php?text=${this.state.content}?&key=${
@@ -84,7 +86,10 @@ class Results extends React.Component {
         }`
       )
       .then(
-        response => this.setState({ errors: response.data })
+        response => {
+          console.log(response.data);
+          this.setState({ errors: response.data });
+        }
         // , () => this.highlight())
       );
   }
@@ -119,9 +124,8 @@ class Results extends React.Component {
             <Typography variant="h6" id="modal-title">
               Errors:
             </Typography>
-            <Typography variant="subtitle1" id="simple-modal-description">
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+            <ErrorTable />
+
             <ResultsModalWrapped />
           </div>
         </Modal>
