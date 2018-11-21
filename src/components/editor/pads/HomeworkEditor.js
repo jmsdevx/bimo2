@@ -293,7 +293,11 @@ class PageContainer extends Component {
           >
             finish
           </Button>
-          <Results note_id={note_id_prop} />
+          <Results
+            editorState={this.state.editorState}
+            onHighlight={this.onHighlight}
+            note_id={note_id_prop}
+          />
         </Drawer>
       </div>
     );

@@ -18,7 +18,8 @@ const actionsStyles = theme => ({
   root: {
     flexShrink: 0,
     color: theme.palette.text.secondary,
-    marginLeft: theme.spacing.unit * 2.5
+    marginLeft: theme.spacing.unit * 4.25,
+    marginTop: theme.spacing.unit * 0.5
   }
 });
 
@@ -117,7 +118,8 @@ const styles = theme => ({
 class CustomPaginationActionsTable extends React.Component {
   state = {
     page: 0,
-    rowsPerPage: 5
+    rowsPerPage: 5,
+    highlights: []
   };
 
   handleChangePage = (event, page) => {
@@ -138,25 +140,31 @@ class CustomPaginationActionsTable extends React.Component {
         rowsPerPage,
         this.props.errors.errors.length - page * rowsPerPage
       );
+    let highlights =
+      this.props.errors &&
+      this.props.errors.errors.map((e, i) => {
+        return { offset: e.offset, length: e.length };
+      });
+    console.log("HL: " + highlights);
 
     return (
       <Paper className={classes.root}>
         <div className={classes.tableWrapper}>
           <Table className={classes.table}>
             <TableBody>
-              {this.props.errors.errors.map((e, i) => {
-                return (
-                  <TableRow key={i}>
-                    <TableCell component="th" scope="row">
-                      {e.bad}
-                    </TableCell>
-                    <TableCell>{e.type}</TableCell>
-                    <TableCell>
-                      {e.better && e.better.map((e, i) => e + "  ")}
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {this.props.errors.errors
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((e, i) => {
+                  return (
+                    <TableRow key={i}>
+                      <TableCell component="th" scope="row">
+                        {e.bad}
+                      </TableCell>
+                      <TableCell>{e.type}</TableCell>
+                      <TableCell>{e.better && e.better[0]}</TableCell>
+                    </TableRow>
+                  );
+                })}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 48 * emptyRows }}>
                   <TableCell colSpan={6} />
