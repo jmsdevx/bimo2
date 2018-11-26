@@ -210,7 +210,7 @@ class Profile extends Component {
                 noWrap
                 className={classes.title}
               >
-                Profile
+                bimo
               </Typography>
               <IconButton color="inherit">
                 <Badge badgeContent={4} color="secondary">

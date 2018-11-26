@@ -31,8 +31,8 @@ const styles = {
     alignText: "center"
   },
   buttonContainer: {
-    background: "#843ffb",
-    opacity: "0.9",
+    background: "#08FBDE",
+    opacity: "1",
     margin: "82.5vh 0 0 0 "
   },
   dialogback: {

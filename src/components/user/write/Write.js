@@ -9,7 +9,7 @@ import space from "./space.jpg";
 const styles = {
   root: {
     flexGrow: 1,
-    margin: "7vh 0px 0px 0px",
+    margin: "7.5vh 0px 0px 0px",
     display: "flex",
     justifyContent: "space-evenly",
     fontSize: "1.7em"

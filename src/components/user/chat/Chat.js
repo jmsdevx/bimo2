@@ -20,8 +20,11 @@ const styles = {
     opacity: "1"
   },
   join: {
-    backgroundColor: "white",
+    background: "#08FBDE",
     opacity: "1"
+  },
+  textField: {
+    color: "white"
   }
 };
 
@@ -213,7 +216,7 @@ class VideoComponent extends Component {
             {" "}
             <div className="flex-side">
               <TextField
-                id="outlined-with-placeholder"
+                id="outlined-with-placeholder-chat"
                 label="Room Name"
                 placeholder="Room Name"
                 className={classes.textField}

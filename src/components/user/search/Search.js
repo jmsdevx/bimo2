@@ -48,7 +48,7 @@ const styles = {
     margin: "2vw 1vw 0 0"
   },
   searchbtn: {
-    backgroundColor: "#843ffb",
+    backgroundColor: "#08FBDE",
     color: "#FFFFF",
     transition: "100s",
     height: "7vh",

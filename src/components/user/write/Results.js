@@ -7,18 +7,13 @@ import Button from "@material-ui/core/Button";
 import axios from "axios";
 import ErrorTable from "./ErrorTable";
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-
 function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
+  const top = 20;
+  const left = 12;
 
   return {
     top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
+    left: `${left}%`
   };
 }
 

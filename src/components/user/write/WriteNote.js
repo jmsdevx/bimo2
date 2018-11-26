@@ -10,7 +10,6 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import Editor from "../../editor/pads/Editor";
-import redblast from "./redblast.png";
 import space from "./space.jpg";
 import { connect } from "react-redux";
 import { getUser } from "../../ducks/user_reducer";
@@ -32,7 +31,7 @@ const styles = {
     alignText: "center"
   },
   buttonContainer: {
-    background: "#843ffb",
+    background: "#08FBDE",
     opacity: "1",
     margin: "82.5vh 0 0 0 "
   },
