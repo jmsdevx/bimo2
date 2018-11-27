@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import noteSubRoutes from "../../../routes/noteSubRoutes";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import space from "../write/space.jpg";
 
 const styles = {
@@ -23,7 +23,22 @@ const styles = {
 
 class Notes extends React.Component {
   state = {
-    value: 0
+    value: 0,
+    redirect: false
+  };
+
+  componentDidMount() {
+    this.setRedirect();
+  }
+
+  setRedirect = () => {
+    this.setState({ redirect: true });
+  };
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/profile/notes/all" />;
+    }
   };
 
   handleChange = (event, value) => {
@@ -58,6 +73,7 @@ class Notes extends React.Component {
           {/* </Tabs> */}
         </Paper>
         {noteSubRoutes}
+        {this.renderRedirect()}
       </div>
     );
   }

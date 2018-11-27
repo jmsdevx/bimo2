@@ -9,6 +9,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
+import FormatBoldIcon from "@material-ui/icons/FormatBold";
+import FormatItalicIcon from "@material-ui/icons/FormatItalic";
+import HighlightIcon from "@material-ui/icons/Highlight";
+import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
 import { EditorState, RichUtils, convertToRaw } from "draft-js";
 import Editor from "draft-js-plugins-editor";
 import createHighlightPlugin from "../plugins/highlightPlugin";
@@ -256,25 +260,25 @@ class PageContainer extends Component {
           <List>
             <ListItem button onClick={this.onBoldClick}>
               <ListItemIcon>
-                <InboxIcon />
+                <FormatBoldIcon />
               </ListItemIcon>
               <ListItemText primary="Bold" />
             </ListItem>
             <ListItem button onClick={this.onItalicClick}>
               <ListItemIcon>
-                <InboxIcon />
+                <FormatItalicIcon />
               </ListItemIcon>
               <ListItemText primary="Italic" />
             </ListItem>
             <ListItem button onClick={this.onHighlight}>
               <ListItemIcon>
-                <InboxIcon />
+                <HighlightIcon />
               </ListItemIcon>
               <ListItemText primary="Highlight" />
             </ListItem>
             <ListItem button onClick={this.onUnderlineClick}>
               <ListItemIcon>
-                <InboxIcon />
+                <FormatUnderlinedIcon />
               </ListItemIcon>
               <ListItemText primary="Underline" />
             </ListItem>

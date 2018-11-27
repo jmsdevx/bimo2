@@ -22,6 +22,10 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import hex from "./hex.jpg";
 import Results from "../../user/write/Results";
+import FormatBoldIcon from "@material-ui/icons/FormatBold";
+import FormatItalicIcon from "@material-ui/icons/FormatItalic";
+import HighlightIcon from "@material-ui/icons/Highlight";
+import FormatUnderlinedIcon from "@material-ui/icons/FormatUnderlined";
 
 const highlightPlugin = createHighlightPlugin();
 const drawerWidth = 240;
@@ -245,25 +249,25 @@ class PageContainer extends Component {
           <List>
             <ListItem button onClick={this.onBoldClick}>
               <ListItemIcon>
-                <InboxIcon />
+                <FormatBoldIcon />
               </ListItemIcon>
               <ListItemText primary="Bold" />
             </ListItem>
             <ListItem button onClick={this.onItalicClick}>
               <ListItemIcon>
-                <InboxIcon />
+                <FormatItalicIcon />
               </ListItemIcon>
               <ListItemText primary="Italic" />
             </ListItem>
             <ListItem button onClick={this.onHighlight}>
               <ListItemIcon>
-                <InboxIcon />
+                <HighlightIcon />
               </ListItemIcon>
               <ListItemText primary="Highlight" />
             </ListItem>
             <ListItem button onClick={this.onUnderlineClick}>
               <ListItemIcon>
-                <InboxIcon />
+                <FormatUnderlinedIcon />
               </ListItemIcon>
               <ListItemText primary="Underline" />
             </ListItem>

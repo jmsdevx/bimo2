@@ -12,6 +12,7 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
+import FastFoodIcon from "@material-ui/icons/Fastfood";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { mainListItems, secondaryListItems } from "./user_data/ListIcons";
@@ -60,14 +61,15 @@ const styles = theme => ({
     })
   },
   menuButton: {
-    marginLeft: 12,
+    // marginLeft: 12,
     marginRight: 36
   },
   menuButtonHidden: {
     display: "none"
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
+    fontSize: "2em"
   },
   drawerPaper: {
     position: "relative",
@@ -201,7 +203,8 @@ class Profile extends Component {
                   this.state.open && classes.menuButtonHidden
                 )}
               >
-                <MenuIcon />
+                <FastFoodIcon id="fastburger" />
+                {/* <MenuIcon /> */}
               </IconButton>
               <Typography
                 component="h1"

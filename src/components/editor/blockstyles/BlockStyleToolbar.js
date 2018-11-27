@@ -6,6 +6,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import List from "@material-ui/core/List";
+import FormatSizeIcon from "@material-ui/icons/FormatSize";
+import Filter1Icon from "@material-ui/icons/Filter1";
 
 const styles = {
   font: {
@@ -27,20 +29,20 @@ class BlockStyleToolbar extends React.Component {
     return (
       <div className={classes.font}>
         <List>
-          <ListItem button onClick={this.onBoldClick}>
+          <ListItem>
             <HeaderStyleDropdown
               headerOptions={HEADER_TYPES}
               active={blockType}
               onToggle={this.props.onToggle}
             />
             <ListItemIcon />
-            <ListItemText primary="Size" />
+            <FormatSizeIcon />
           </ListItem>
         </List>
         <List>
           {BLOCK_TYPES.map((type, i) => {
             return (
-              <ListItem>
+              <ListItem button>
                 <BlockStyleButton
                   active={type.style === blockType}
                   label={type.label}
@@ -59,18 +61,18 @@ class BlockStyleToolbar extends React.Component {
 }
 
 export const BLOCK_TYPES = [
-  { label: " [“ ”] ", style: "blockquote" },
-  { label: "[ -- ]", style: "unordered-list-item" },
-  { label: "[ 1. ]", style: "ordered-list-item" }
+  { label: " [“ ”]   Quote", style: "blockquote" },
+  { label: "[ - ]   Bullet", style: "unordered-list-item" },
+  { label: "[ 1. ]   List", style: "ordered-list-item" }
   //   { label: "{ }", style: "code-block" }
 ];
 export const HEADER_TYPES = [
-  { label: "BIGGEST", style: "header-one" },
-  { label: "BIGGER", style: "header-two" },
-  { label: "BIG", style: "header-three" },
-  { label: "small", style: "header-four" },
-  { label: "smaller", style: "header-five" },
-  { label: "smallest", style: "header-six" }
+  { label: "H1", style: "header-one" },
+  { label: "H2", style: "header-two" },
+  { label: "H3", style: "header-three" },
+  { label: "h4", style: "header-four" },
+  { label: "h5", style: "header-five" },
+  { label: "h6", style: "header-six" }
 ];
 
 export function getBlockStyle(block) {

@@ -69,8 +69,8 @@ class AllText extends Component {
     this.state = { notes: [], auth_id: "", profile: [], open: false };
   }
 
-  async componentDidMount() {
-    await this.props.getUser();
+  componentDidMount() {
+    this.props.getUser();
     this.setProfile();
   }
 

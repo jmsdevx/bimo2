@@ -111,7 +111,7 @@ class WriteHomework extends React.Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" className={classes.flex}>
-                NOTE TITLE
+                Homework
               </Typography>
               <Button color="inherit" onClick={this.handleClose}>
                 save

@@ -111,7 +111,7 @@ class WriteNote extends React.Component {
                 <CloseIcon />
               </IconButton>
               <Typography variant="h6" color="inherit" className={classes.flex}>
-                write a note
+                Note
               </Typography>
             </Toolbar>
           </AppBar>

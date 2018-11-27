@@ -5,19 +5,28 @@ import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
+import FingerprintIcon from "@material-ui/icons/Fingerprint";
 
 const styles = {
   switch: {
     position: "absolute",
     zIndex: "0",
     margin: "51.7vh 0 0 65.6vw"
+  },
+  print: {
+    position: "absolute",
+    zIndex: "0",
+    margin: "65vh 0 0 87vw",
+    color: "white",
+    height: "20vh",
+    width: "10vw"
   }
 };
 
 class SplashImage extends Component {
   constructor(props) {
     super();
-    this.state = { checked: true };
+    this.state = { checked: false };
   }
 
   handleChange = () => {
@@ -30,10 +39,16 @@ class SplashImage extends Component {
     return (
       <div>
         <Switch
-          checked={!checked}
+          checked={checked}
           onChange={this.handleChange}
           aria-label="Collapse"
           className={classes.switch}
+        />
+        <FingerprintIcon
+          className={classes.print}
+          onClick={this.handleChange}
+          color="white"
+          id="fingerprint"
         />
         <div className="splashinfo">
           <Grow

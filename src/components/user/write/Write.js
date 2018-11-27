@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import writeSubRoutes from "../../../routes/writeSubRoutes";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import space from "./space.jpg";
 
 const styles = {
@@ -23,8 +23,25 @@ const styles = {
 
 class Write extends React.Component {
   state = {
-    value: 0
+    value: 0,
+    redirect: false
   };
+
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    });
+  };
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/profile/write/note" />;
+    }
+  };
+
+  componentDidMount() {
+    this.setRedirect();
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -54,6 +71,7 @@ class Write extends React.Component {
           {/* </Tabs> */}
         </Paper>
         {writeSubRoutes}
+        {this.renderRedirect()}
       </div>
     );
   }

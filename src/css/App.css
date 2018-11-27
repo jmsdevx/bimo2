@@ -154,19 +154,19 @@ a:hover {
   margin: 0vh 80vw 0vh 10vw;
 }
 .save {
-  margin: 5vh 60vw 0vh 32vw;
+  margin: 0vh 60vw 0vh 32vw;
 }
 
 .chat {
-  margin: 23vh 60vw 0vh 50vw;
+  margin: 10vh 60vw 0vh 50vw;
 }
 
 .search {
-  margin: 5vh 13vw 0vh 78vw;
+  margin: 8vh 13vw 0vh 80vw;
 }
 
 .learn {
-  margin: 0vh 2vw 0vh 85vw;
+  margin: 2vh 2vw 0vh 86vw;
 }
 
 .notescontainer {
@@ -206,6 +206,46 @@ a:hover {
   opacity: 1;
   color: rgb(255, 251, 4, 1);
   text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.9);
+}
+
+#fastburger {
+  height: 4vh;
+  width: 3vw;
+}
+
+@keyframes blinker {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.1;
+  }
+}
+
+@keyframes printer {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+
+#fingerprint {
+  animation-name: blinker;
+
+  animation-timing-function: cubic-bezier(0.5, 0, 1, 1);
+  animation-iteration-count: infinite;
+  animation-duration: 1.5s;
+}
+
+#fingerprint:hover {
+  animation-name: printer;
+
+  animation-timing-function: cubic-bezier(0.9, 0.9, 1, 1);
+  animation-iteration-count: infinite;
+  animation-duration: 0.5s;
+  cursor: pointer;
 }
 
 /*
