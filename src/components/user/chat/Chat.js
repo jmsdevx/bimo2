@@ -3,10 +3,7 @@ import Video from "twilio-video";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import { Card } from "@material-ui/core/Card";
 import { withStyles } from "@material-ui/core";
-import comet from "../chat/comet.png";
-import Editor from "../../editor/pads/Editor";
 import alienhex from "../profile/user_data/alienhex.png";
 
 const styles = {
@@ -29,7 +26,7 @@ const styles = {
 };
 
 class VideoComponent extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       identity: null,
@@ -40,22 +37,17 @@ class VideoComponent extends Component {
       hasJoinedRoom: false,
       activeRoom: "" // Track the current active room
     };
-    this.joinRoom = this.joinRoom.bind(this);
-    this.handleRoomNameChange = this.handleRoomNameChange.bind(this);
-    this.roomJoined = this.roomJoined.bind(this);
-    this.leaveRoom = this.leaveRoom.bind(this);
-    this.detachTracks = this.detachTracks.bind(this);
-    this.detachParticipantTracks = this.detachParticipantTracks.bind(this);
   }
 
-  handleRoomNameChange(e) {
+  handleRoomNameChange = e => {
     let roomName = e.target.value;
     this.setState({ roomName });
-  }
+  };
 
-  joinRoom() {
+  joinRoom = () => {
     if (!this.state.roomName.trim()) {
       this.setState({ roomNameErr: true });
+      alert("Please enter a valid room name.");
       return;
     }
 
@@ -70,40 +62,40 @@ class VideoComponent extends Component {
 
     // Join the Room with the token from the server and the
     // LocalParticipant's Tracks.
-    Video.connect(
-      this.state.token,
-      connectOptions
-    ).then(this.roomJoined, error => {
-      alert("Could not connect to Twilio: " + error.message);
-    });
-  }
+    Video.connect(this.state.token, connectOptions).then(
+      this.roomJoined,
+      error => {
+        alert("Could not connect to Twilio: " + error.message);
+      }
+    );
+  };
 
-  attachTracks(tracks, container) {
+  attachTracks = (tracks, container) => {
     tracks.forEach(track => {
       container.appendChild(track.attach());
     });
-  }
+  };
 
   // Attaches a track to a specified DOM container
-  attachParticipantTracks(participant, container) {
+  attachParticipantTracks = (participant, container) => {
     var tracks = Array.from(participant.tracks.values());
     this.attachTracks(tracks, container);
-  }
+  };
 
-  detachTracks(tracks) {
+  detachTracks = tracks => {
     tracks.forEach(track => {
       track.detach().forEach(detachedElement => {
         detachedElement.remove();
       });
     });
-  }
+  };
 
-  detachParticipantTracks(participant) {
+  detachParticipantTracks = participant => {
     var tracks = Array.from(participant.tracks.values());
     this.detachTracks(tracks);
-  }
+  };
 
-  roomJoined(room) {
+  roomJoined = room => {
     // Called when a participant joins a room
     console.log("Joined as '" + this.state.identity + "'");
     this.setState({
@@ -165,7 +157,12 @@ class VideoComponent extends Component {
         localMediaAvailable: false
       });
     });
-  }
+  };
+
+  leaveRoom = () => {
+    this.state.activeRoom.disconnect();
+    this.setState({ hasJoinedRoom: false, localMediaAvailable: false });
+  };
 
   componentDidMount() {
     axios.get("/token").then(results => {
@@ -174,9 +171,8 @@ class VideoComponent extends Component {
     });
   }
 
-  leaveRoom() {
-    this.state.activeRoom.disconnect();
-    this.setState({ hasJoinedRoom: false, localMediaAvailable: false });
+  componentWillUnmount() {
+    return this.state.activeRoom ? this.leaveRoom() : null;
   }
 
   render() {

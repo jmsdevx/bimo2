@@ -301,6 +301,7 @@ class PageContainer extends Component {
             editorState={this.state.editorState}
             onHighlight={this.onHighlight}
             note_id={note_id_prop}
+            check={this.state.check}
           />
         </Drawer>
       </div>

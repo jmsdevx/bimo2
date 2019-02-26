@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import writeSubRoutes from "../../../routes/writeSubRoutes";
@@ -9,7 +8,7 @@ import space from "./space.jpg";
 const styles = {
   root: {
     flexGrow: 1,
-    margin: "7.5vh 0px 0px 0px",
+    margin: "6.8vh 0px 0px 0px",
     display: "flex",
     justifyContent: "space-evenly",
     fontSize: "1.7em"
@@ -43,32 +42,14 @@ class Write extends React.Component {
     this.setRedirect();
   }
 
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
-
   render() {
     const { classes } = this.props;
 
     return (
       <div className={classes.writecontainer}>
         <Paper className={classes.root}>
-          {/* <Tabs
-            value={this.state.value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
-          > */}
-          <Link to="/profile/write/note">
-            Note
-            {/* <Tab textColor="secondary" label="Note" /> */}
-          </Link>
-          <Link to="/profile/write/homework">
-            Homework
-            {/* <Tab label="Homework" /> */}
-          </Link>
-          {/* </Tabs> */}
+          <Link to="/profile/write/note">Note</Link>
+          <Link to="/profile/write/homework">Homework</Link>
         </Paper>
         {writeSubRoutes}
         {this.renderRedirect()}
@@ -76,9 +57,5 @@ class Write extends React.Component {
     );
   }
 }
-
-Write.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(styles)(Write);

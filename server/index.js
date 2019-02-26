@@ -22,7 +22,7 @@ const {
   getRecent,
   getNote
 } = require("./controllers/noteCtrl");
-const { getSearch } = require("./controllers/searchCtrl");
+const { getSearch, getSynonyms } = require("./controllers/searchCtrl");
 
 //basic
 app.use(json());
@@ -44,7 +44,7 @@ app.delete("/api/notes/all/:id", deleteNote);
 
 //search
 app.post("/api/search", getSearch);
-// app.post("/api/search/synonyms", getSynonyms);
+app.post("/api/search/synonyms", getSynonyms);
 
 //sessions
 app.use(

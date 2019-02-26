@@ -1,11 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import axios from "axios";
 import ErrorTable from "./ErrorTable";
+import Paper from "@material-ui/core/Paper";
 
 function getModalStyle() {
   const top = 20;
@@ -28,6 +28,10 @@ const styles = theme => ({
   resultsContainer: {
     textAlign: "center",
     margin: "10vh 0 0 0"
+  },
+  spellcheck: {
+    elevation: 1,
+    backgroundColor: theme.palette.secondary.main
   }
 });
 
@@ -45,12 +49,7 @@ class Results extends React.Component {
     };
   }
 
-  //   componentDidMount() {
-  //     this.getHomework();
-  //   }
-
   async getHomework() {
-    console.log(this.props.note_id);
     await axios
       .get(`/api/write/results/${this.props.note_id}`)
       .then(response => {
@@ -62,7 +61,6 @@ class Results extends React.Component {
   }
 
   drill() {
-    console.log(this.state.homework[0]);
     let alltext = this.state.homework[0].note_content.blocks.map(
       (e, i) => e.text
     );
@@ -73,25 +71,24 @@ class Results extends React.Component {
   }
 
   getResults() {
-    console.log(this.state.content);
     axios
       .post(
         `https://api.textgears.com/check.php?text=${this.state.content}?&key=${
           process.env.TG_KEY
         }`
       )
-      .then(
-        response => {
-          console.log(response.data);
-          this.setState({ errors: response.data });
-        }
-        // , () => this.highlight())
-      );
+      .then(response => {
+        this.setState({ errors: response.data });
+      });
   }
 
   handleOpen = () => {
-    this.setState({ open: true });
-    this.getHomework();
+    if (this.props.check) {
+      this.getHomework();
+      this.setState({ open: true });
+    } else {
+      alert("Please save your work!");
+    }
   };
 
   handleClose = () => {
@@ -103,12 +100,14 @@ class Results extends React.Component {
 
     return (
       <div className={classes.resultsContainer}>
-        <Typography gutterBottom>
-          Click to see your spelling and grammar mistakes.
-        </Typography>
-        <Button color="primary" onClick={this.handleOpen}>
-          SpellCheck
-        </Button>
+        <Paper className={classes.spellcheck}>
+          <Typography gutterBottom>
+            Click to see your spelling and grammar mistakes.
+          </Typography>
+          <Button color="primary" onClick={this.handleOpen}>
+            SpellCheck
+          </Button>
+        </Paper>
         <Modal
           aria-labelledby="simple-modal-title"
           aria-describedby="simple-modal-description"
@@ -121,8 +120,6 @@ class Results extends React.Component {
             </Typography>
             <Typography variant="p">{this.state.content}</Typography>
             <ErrorTable errors={this.state.errors} />
-
-            <ResultsModalWrapped />
           </div>
         </Modal>
       </div>
@@ -130,11 +127,6 @@ class Results extends React.Component {
   }
 }
 
-Results.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-// We need an intermediary variable for handling the recursive nesting.
 const ResultsModalWrapped = withStyles(styles)(Results);
 
 export default ResultsModalWrapped;

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -89,15 +88,6 @@ class TablePaginationActions extends React.Component {
   }
 }
 
-TablePaginationActions.propTypes = {
-  classes: PropTypes.object.isRequired,
-  count: PropTypes.number.isRequired,
-  onChangePage: PropTypes.func.isRequired,
-  page: PropTypes.number.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
-  theme: PropTypes.object.isRequired
-};
-
 const TablePaginationActionsWrapped = withStyles(actionsStyles, {
   withTheme: true
 })(TablePaginationActions);
@@ -115,7 +105,7 @@ const styles = theme => ({
   }
 });
 
-class CustomPaginationActionsTable extends React.Component {
+class ErrorTable extends React.Component {
   state = {
     page: 0,
     rowsPerPage: 5,
@@ -131,7 +121,6 @@ class CustomPaginationActionsTable extends React.Component {
   };
 
   render() {
-    console.log(this.props.errors);
     const { classes } = this.props;
     const { rowsPerPage, page } = this.state;
     const emptyRows =
@@ -140,12 +129,6 @@ class CustomPaginationActionsTable extends React.Component {
         rowsPerPage,
         this.props.errors.errors.length - page * rowsPerPage
       );
-    let highlights =
-      this.props.errors &&
-      this.props.errors.errors.map((e, i) => {
-        return { offset: e.offset, length: e.length };
-      });
-    console.log("HL: " + highlights);
 
     return (
       <Paper className={classes.root}>
@@ -192,8 +175,4 @@ class CustomPaginationActionsTable extends React.Component {
   }
 }
 
-CustomPaginationActionsTable.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(CustomPaginationActionsTable);
+export default withStyles(styles)(ErrorTable);

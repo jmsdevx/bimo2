@@ -2,15 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import Button from "@material-ui/core/Button";
 import Speech from "./Speech";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import TextField from "@material-ui/core/TextField";
-import { transparent } from "material-ui/styles/colors";
-import { isWidthDown } from "@material-ui/core/withWidth";
 
 const styles = {
   card: {
@@ -35,7 +30,8 @@ const styles = {
   results: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "stretch"
+    alignItems: "stretch",
+    overflow: "auto"
   },
   textField: {
     color: "white",
@@ -49,6 +45,13 @@ const styles = {
   },
   searchbtn: {
     backgroundColor: "#08FBDE",
+    color: "#FFFFF",
+    transition: "100s",
+    height: "7vh",
+    margin: "0 1vw 1vw 0"
+  },
+  synbtn: {
+    backgroundColor: "#843ffb",
     color: "#FFFFF",
     transition: "100s",
     height: "7vh",
@@ -81,20 +84,16 @@ class Search extends Component {
       synLexCat: [],
       antresults: [],
       antonyms: [],
-      cardobject: []
+      cardobject: [],
+      searchType: ""
     };
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.speechDisplay = this.speechDisplay.bind(this);
-    this.handleThesaurus = this.handleThesaurus.bind(this);
-    // this.cardClosure = this.cardClosure.bind(this);
-    // this.cardObject = this.cardObject.bind(this);
   }
 
   handleChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
 
-  async handleSubmit(e) {
+  handleSubmit = async e => {
     e.preventDefault();
     const { input, type } = this.state;
     console.log(input);
@@ -105,17 +104,18 @@ class Search extends Component {
           type: type
         })
         .then(response =>
-          this.setState(
-            { results: response.data, input: "", check: false },
-            () => console.log(this.state.results)
-          )
+          this.setState({
+            results: response.data,
+            check: false,
+            searchType: "defs"
+          })
         )
         .catch(e => console.log(e));
       this.drilldefs();
     }
-  }
+  };
 
-  drilldefs() {
+  drilldefs = () => {
     let speech = this.state.results.map((e, i) => {
       return e.pronunciations
         ? e.pronunciations.filter(f => {
@@ -139,54 +139,30 @@ class Search extends Component {
       check: !this.state.check,
       speech: speech
     });
-    console.log(this.state.cardobject);
-  }
+  };
 
-  async handleThesaurus() {
+  handleThesaurus = async () => {
     await axios
-      .post("http://localhost:3005/api/search/synonyms", {
-        input: this.state.text[0]
+      .post("/api/search/synonyms", {
+        input: this.state.input
       })
       .then(response =>
-        this.setState({ synresults: response.data }, () =>
-          console.log(this.state.synresults)
-        )
+        this.setState({
+          synresults: response.data[0].entries[0].senses[0].synonyms,
+          searchType: "syns"
+        })
       )
       .catch(e => console.log(e));
-    this.drillSynonyms();
-  }
-
-  drillSynonyms() {
-    let synLexCat = this.state.results.map((e, i) => {
-      return e.lexicalCategory;
-    });
-    let syns = this.state.synresults.map((ele, ind) => {
-      return ele.entries.map((e, i) => {
-        return e.senses.map((f, j) => {
-          return f.subsenses
-            ? f.subsenses.map((g, k) => {
-                return g.synonyms.map((element, index) => {
-                  return element.text;
-                });
-              })
-            : f.synonyms;
-        });
-      });
-    });
-    this.setState({ synonyms: syns, synLexCat: synLexCat }, () =>
-      console.log(this.state.synonyms)
-    );
-  }
+  };
 
   speechDisplay() {
     console.log(this.state.speech[0][0].audioFile);
     return <Speech speech={this.state.speech[0][0].audioFile} />;
   }
+
   render() {
     const { classes } = this.props;
     let cardFactory = this.state.cardobject.map((e, i) => {
-      // return console.log(Object.keys(e));
-      // return console.log(Object.values(e));
       return Object.values(e) !== typeof undefined ? (
         <Card className={classes.card}>
           <CardContent>
@@ -195,11 +171,20 @@ class Search extends Component {
             </Typography>
             <Typography component="p">{Object.values(e)}</Typography>
           </CardContent>
-          {/* <CardActions>
-            <Button size="small">Save</Button>
-          </CardActions> */}
         </Card>
       ) : null;
+    });
+
+    let syndisplay = this.state.synresults.map((e, i) => {
+      return (
+        <Card className={classes.card}>
+          <CardContent>
+            <Typography variant="h5" component="h2">
+              {e.text}
+            </Typography>
+          </CardContent>
+        </Card>
+      );
     });
 
     return (
@@ -217,30 +202,22 @@ class Search extends Component {
               onChange={this.handleChange}
               placeholder="search..."
             />
-            {/* <select
-              name="type"
-              id="type"
-              defaultValue="regions=us"
-              onChange={this.handleChange}
-            >
-              <option value="regions=us">Dictionary</option>
-              <option value="synonyms">Synonyms</option>
-              <option value="antonyms">Antonyms</option>
-              <option value="sentences">Sentences</option>
-            </select> */}
             <Button className={classes.searchbtn} onClick={this.handleSubmit}>
               Search
             </Button>
+            <Button className={classes.synbtn} onClick={this.handleThesaurus}>
+              Synonyms
+            </Button>
           </div>
-          {/* <Button onClick={this.handleThesaurus}>Thesaurus</Button> */}
+
           {this.state.check ? (
             <Speech speech={this.state.speech[0][0].audioFile} />
           ) : null}
         </div>
         <div className={classes.results}>
-          {/* <div>{lexCatDisplay}</div>
-          <div>{defsDisplay}</div> */}
-          <div className={classes.cardcontainer}>{cardFactory}</div>
+          <div className={classes.cardcontainer}>
+            {this.state.searchType === "defs" ? cardFactory : syndisplay}
+          </div>
         </div>
       </div>
     );
@@ -248,53 +225,3 @@ class Search extends Component {
 }
 
 export default withStyles(styles)(Search);
-
-// drilldefs() {
-//   let defs = this.state.results.map((e, i) => {
-//     return e.entries.map((f, j) => {
-//       return f.senses.map((g, k) => {
-//         return g.definitions || g.short_definitions;
-//       });
-//     });
-//   });
-//   let lexCat = this.state.results.map((e, i) => {
-//     return e.lexicalCategory;
-//   });
-
-//   let text = this.state.results.map((e, i) => {
-//     return e.text;
-//   });
-//   this.setState(
-//     {
-//       defs: defs,
-//       lexCat: lexCat,
-//       speech: speech,
-//       text: text,
-//       check: !this.state.check
-//     }
-//     // () => this.cardObject(this.cardClosure)
-//     // () => this.cardClosure(this.cardObject)
-//   );
-// }
-
-// let lexCatDisplay = this.state.lexCat.map((e, i) => {
-//   return (
-//     <div className="lexCat" key={i}>
-//       <h1>{e}</h1>
-//     </div>
-//   );
-// });
-
-// let defsDisplay = this.state.defs.map((e, i) => {
-//   return e.map((f, j) => {
-//     return f.map((g, k) => {
-//       return (
-//         <div className="defs" key={k}>
-//           <h3>
-//             {k + 1}. {g}
-//           </h3>
-//         </div>
-//       );
-//     });
-//   });
-// });

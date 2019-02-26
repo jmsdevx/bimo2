@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -33,7 +32,7 @@ const styles = {
   buttonContainer: {
     background: "#08FBDE",
     opacity: "1",
-    margin: "82.5vh 0 0 0 "
+    margin: "84.3vh 0 0 0 "
   },
   dialogback: {
     backgroundImage: `url(${space})`
@@ -45,7 +44,7 @@ function Transition(props) {
 }
 
 class WriteHomework extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = {
       open: false,
@@ -56,23 +55,6 @@ class WriteHomework extends React.Component {
 
   async componentDidMount() {
     await this.props.getUser();
-    this.setProfile();
-  }
-
-  setProfile() {
-    this.setState({ profile: this.props.state.user_reducer.user }, () =>
-      this.drill()
-    );
-  }
-
-  drill() {
-    console.log(this.state.profile);
-    this.state.profile.map((e, i) => {
-      return this.setState({
-        auth_id: e.auth_id
-      });
-    });
-    console.log(this.state.auth_id);
   }
 
   handleClickOpen = () => {
@@ -118,9 +100,8 @@ class WriteHomework extends React.Component {
               </Button>
             </Toolbar>
           </AppBar>
-          {/* <Editor /> */}
           <HomeworkEditor
-            auth_id={this.state.auth_id}
+            auth_id={this.props.state.user_reducer.user.auth_id}
             handleClose={this.handleClose}
           />
         </Dialog>
@@ -128,10 +109,6 @@ class WriteHomework extends React.Component {
     );
   }
 }
-
-WriteHomework.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 function mapStatetoProps(state) {
   return { state };
