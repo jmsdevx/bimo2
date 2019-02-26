@@ -1,37 +1,34 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-// import LinkBurger from "./LinkBurger";
 
 const styles = {
   root: {
     flexGrow: 1,
     fontSize: "1.7em"
   },
-  grow: {
-    flexGrow: 1
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  },
   login: {
     color: "white"
+  },
+  toolbar: {
+    display: "flex",
+    justifyContent: "space-between"
   }
 };
 
-function ButtonAppBar(props) {
+function NavBar(props) {
   const { classes } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Toolbar>
-          {/* <LinkBurger className={classes.menuButton} /> */}
-          <Typography variant="h4" color="inherit" className={classes.grow}>
+        <Toolbar className={classes.toolbar}>
+          <Typography variant="h4" color="inherit">
             bimo
+          </Typography>
+          <Typography variant="h5" color="inherit">
+            English eLearning
           </Typography>
           <a
             className={classes.login}
@@ -45,8 +42,4 @@ function ButtonAppBar(props) {
   );
 }
 
-ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-export default withStyles(styles)(ButtonAppBar);
+export default withStyles(styles)(NavBar);

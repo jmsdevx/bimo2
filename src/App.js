@@ -9,6 +9,7 @@ import "./css/App.css";
 
 const theme = createMuiTheme({
   palette: {
+    type: "light",
     primary: {
       light: "#bb70ff",
       main: "#843ffb",

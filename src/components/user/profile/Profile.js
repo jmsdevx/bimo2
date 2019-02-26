@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,11 +10,10 @@ import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import Badge from "@material-ui/core/Badge";
-import MenuIcon from "@material-ui/icons/Menu";
 import FastFoodIcon from "@material-ui/icons/Fastfood";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import { mainListItems, secondaryListItems } from "./user_data/ListIcons";
+import { mainListItems } from "./user_data/ListIcons";
 import profSubRoutes from "../../../routes/profSubRoutes";
 import space from "../write/space.jpg";
 import axios from "axios";
@@ -61,7 +59,6 @@ const styles = theme => ({
     })
   },
   menuButton: {
-    // marginLeft: 12,
     marginRight: 36
   },
   menuButtonHidden: {
@@ -91,16 +88,6 @@ const styles = theme => ({
     [theme.breakpoints.up("sm")]: {
       width: theme.spacing.unit * 9
     }
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    height: "100%",
-    overflow: "auto"
-  },
-  h5: {
-    marginBottom: theme.spacing.unit * 2
   }
 });
 
@@ -118,7 +105,6 @@ class Profile extends Component {
 
   async componentDidMount() {
     await this.props.getUser();
-
     this.setProfile();
   }
 
@@ -162,8 +148,8 @@ class Profile extends Component {
   render() {
     const { classes } = this.props;
     let recents = this.state.recent.filter((e, i) => {
-      console.log("e" + e.auth_id);
-      console.log(this.state.auth_id);
+      console.log("e -" + e.auth_id);
+      console.log("state -" + this.state.auth_id);
       return e.auth_id === this.state.auth_id;
     });
     let recentdisplay = recents.map((e, i) => {
@@ -204,7 +190,6 @@ class Profile extends Component {
                 )}
               >
                 <FastFoodIcon id="fastburger" />
-                {/* <MenuIcon /> */}
               </IconButton>
               <Typography
                 component="h1"
@@ -246,7 +231,6 @@ class Profile extends Component {
                 's Notes
               </ListSubheader>
               {recentdisplay}
-              {/* {secondaryListItems} */}
             </List>
             <Divider />
           </Drawer>
@@ -256,10 +240,6 @@ class Profile extends Component {
     );
   }
 }
-
-Profile.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 function mapStatetoProps(state) {
   return { state };

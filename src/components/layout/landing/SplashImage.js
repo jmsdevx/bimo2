@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import create from "./create.png";
-import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
-import Paper from "@material-ui/core/Paper";
 import Grow from "@material-ui/core/Grow";
 import FingerprintIcon from "@material-ui/icons/Fingerprint";
 
@@ -11,7 +8,7 @@ const styles = {
   switch: {
     position: "absolute",
     zIndex: "0",
-    margin: "51.7vh 0 0 65.6vw"
+    margin: "52.6vh 0 0 65.7vw"
   },
   print: {
     position: "absolute",
@@ -24,7 +21,7 @@ const styles = {
 };
 
 class SplashImage extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = { checked: false };
   }

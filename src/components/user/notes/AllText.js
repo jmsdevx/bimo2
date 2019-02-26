@@ -64,7 +64,7 @@ function Transition(props) {
 }
 
 class AllText extends Component {
-  constructor(props) {
+  constructor() {
     super();
     this.state = { notes: [], auth_id: "", profile: [], open: false };
   }
