@@ -9,21 +9,20 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import Slide from "@material-ui/core/Slide";
 import HomeworkEditor from "../../editor/pads/HomeworkEditor";
-import whiteblast from "./whiteblast.jpg";
 import space from "./space.jpg";
 import { connect } from "react-redux";
 import { getUser } from "../../ducks/user_reducer";
+import AllText from "../notes/AllText";
+import AddIcon from "@material-ui/icons/Add";
 
 const styles = {
   appBar: {
     position: "relative"
   },
   background: {
-    backgroundImage: `url(${whiteblast})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    opacity: "1"
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center"
   },
   flex: {
     flex: 1,
@@ -32,10 +31,19 @@ const styles = {
   buttonContainer: {
     background: "#08FBDE",
     opacity: "1",
-    margin: "84.3vh 0 0 0 "
+    margin: "0.5vw",
+    alignSelf: "center"
   },
   dialogback: {
     backgroundImage: `url(${space})`
+  },
+  notescontainer: {
+    height: "78vh",
+    overflow: "auto"
+  },
+  add: {
+    height: "2vw",
+    width: "2vw"
   }
 };
 
@@ -72,10 +80,13 @@ class WriteHomework extends React.Component {
         <Button
           className={classes.buttonContainer}
           onClick={this.handleClickOpen}
-          fullWidth={true}
+          variant="fab"
         >
-          Create New Homework
+          <AddIcon color="action" className={classes.add} />
         </Button>
+        <div className={classes.notescontainer}>
+          <AllText type="homework" />
+        </div>
         <Dialog
           fullScreen
           open={this.state.open}

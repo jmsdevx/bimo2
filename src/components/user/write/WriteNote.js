@@ -12,18 +12,18 @@ import Editor from "../../editor/pads/Editor";
 import space from "./space.jpg";
 import { connect } from "react-redux";
 import { getUser } from "../../ducks/user_reducer";
-import popsicle from "../profile/user_data/popsicle_adventure_1.png";
+import AllText from "../notes/AllText";
+import AddIcon from "@material-ui/icons/Add";
+import axios from "axios";
 
 const styles = {
   appBar: {
     position: "relative"
   },
   background: {
-    backgroundImage: `url(${popsicle})`,
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    opacity: "1"
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center"
   },
   flex: {
     flex: 1,
@@ -32,10 +32,19 @@ const styles = {
   buttonContainer: {
     background: "#08FBDE",
     opacity: "1",
-    margin: "84.3vh 0 0 0 "
+    margin: "0.5vw",
+    alignSelf: "center"
   },
   dialogback: {
     backgroundImage: `url(${space})`
+  },
+  notescontainer: {
+    height: "78vh",
+    overflow: "auto"
+  },
+  add: {
+    height: "2vw",
+    width: "2vw"
   }
 };
 
@@ -49,13 +58,30 @@ class WriteNote extends Component {
     this.state = {
       open: false,
       profile: [],
-      auth_id: ""
+      auth_id: "",
+      notes: []
     };
   }
 
   async componentDidMount() {
     await this.props.getUser();
+    this.getAllNotes();
   }
+
+  getAllNotes = () => {
+    const auth_id = this.props.state.user_reducer.user[0].auth_id;
+    if (this.props.type === "note") {
+      axios
+        .get(`/api/notes/all/${auth_id}`)
+        .then(response => this.setState({ notes: response.data }))
+        .catch(e => console.log(e));
+    } else {
+      axios
+        .get(`/api/notes/all/${auth_id}`)
+        .then(response => this.setState({ notes: response.data }))
+        .catch(e => console.log(e));
+    }
+  };
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -72,10 +98,13 @@ class WriteNote extends Component {
         <Button
           className={classes.buttonContainer}
           onClick={this.handleClickOpen}
-          fullWidth={true}
+          variant="fab"
         >
-          Create New Note
+          <AddIcon color="action" className={classes.add} />
         </Button>
+        <div className={classes.notescontainer}>
+          <AllText type="note" notes={this.state.notes} />
+        </div>
         <Dialog
           fullScreen
           open={this.state.open}
@@ -97,10 +126,13 @@ class WriteNote extends Component {
               </Typography>
             </Toolbar>
           </AppBar>
-          <Editor
-            auth_id={this.props.state.user_reducer.user.auth_id}
-            handleClose={this.handleClose}
-          />
+          {this.props.state.user_reducer.user[0] && (
+            <Editor
+              auth_id={this.props.state.user_reducer.user[0].auth_id}
+              handleClose={this.handleClose}
+              getAllNotes={this.getAllNotes}
+            />
+          )}
         </Dialog>
       </div>
     );

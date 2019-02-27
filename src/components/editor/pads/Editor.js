@@ -8,7 +8,6 @@ import Divider from "@material-ui/core/Divider";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import FormatBoldIcon from "@material-ui/icons/FormatBold";
 import FormatItalicIcon from "@material-ui/icons/FormatItalic";
 import HighlightIcon from "@material-ui/icons/Highlight";
@@ -121,6 +120,7 @@ class PageContainer extends Component {
           .then(response => {
             console.log(response.data[0].max);
             this.setState({ check: true, note_id: response.data[0].max });
+            this.props.getAllNotes();
           });
   };
 
@@ -144,7 +144,7 @@ class PageContainer extends Component {
             auth_id: this.props.auth_id,
             note_type: "note"
           })
-          .then(this.props.handleClose);
+          .then(this.props.getAllNotes());
   };
 
   handleKeyCommand = command => {

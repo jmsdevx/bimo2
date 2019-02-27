@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import axios from "axios";
 import { withStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
@@ -13,20 +12,12 @@ import Typography from "@material-ui/core/Typography";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import Dialog from "@material-ui/core/Dialog";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
-import Slide from "@material-ui/core/Slide";
-import EditNote from "./EditNote";
-import moonlight from "../profile/user_data/2D_moonlight.png";
 
 const styles = theme => ({
   root: {
     width: "80%",
-    margin: ".5vh 0 0 10vw",
-    backgroundImage: `url(${moonlight})`
+    height: "100%",
+    margin: ".5vh 0 0 10vw"
   },
   heading: {
     fontSize: theme.typography.pxToRem(15)
@@ -56,49 +47,26 @@ const styles = theme => ({
     "&:hover": {
       textDecoration: "underline"
     }
+  },
+  edit_field: {
+    width: "50vw"
   }
 });
-
-function Transition(props) {
-  return <Slide direction="up" {...props} />;
-}
 
 class AllText extends Component {
   constructor() {
     super();
-    this.state = { notes: [], auth_id: "", profile: [], open: false };
+    this.state = {
+      notes: [],
+      auth_id: "",
+      profile: [],
+      edit_content: "",
+      editing: false
+    };
   }
 
   componentDidMount() {
     this.props.getUser();
-    this.setProfile();
-  }
-
-  setProfile() {
-    this.setState({ profile: this.props.state.user_reducer.user }, () =>
-      this.drill()
-    );
-  }
-
-  drill() {
-    console.log(this.state.profile);
-    this.state.profile.map((e, i) => {
-      return this.setState(
-        {
-          auth_id: e.auth_id
-        },
-        () => this.getAllNotes()
-      );
-    });
-    console.log(this.state.auth_id);
-  }
-
-  getAllNotes() {
-    const auth_id = this.state.auth_id;
-    axios
-      .get(`/api/notes/all/${auth_id}`)
-      .then(response => this.setState({ notes: response.data }))
-      .catch(e => console.log(e));
   }
 
   deleteNote(id) {
@@ -113,17 +81,9 @@ class AllText extends Component {
       .catch(error => console.log(error));
   }
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false }, () => this.getAllNotes());
-  };
-
   render() {
     const { classes } = this.props;
-    let notesdisplay = this.state.notes.map((e, i) => {
+    let notesdisplay = this.props.notes.map((e, i) => {
       return (
         <div key={e.note_id} className={classes.root}>
           <ExpansionPanel>
@@ -136,7 +96,7 @@ class AllText extends Component {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails className={classes.details}>
               <div className={classNames(classes.column, classes.helper)}>
-                <Typography variant="caption">
+                <Typography>
                   {e.note_content.blocks.map((f, j) => f.text + " ")}
                 </Typography>
               </div>
@@ -146,60 +106,14 @@ class AllText extends Component {
               <Button size="small" onClick={() => this.deleteNote(e.note_id)}>
                 Delete
               </Button>
-              <Button
-                size="small"
-                color="primary"
-                onClick={this.handleClickOpen}
-              >
-                Edit
-              </Button>
             </ExpansionPanelActions>
           </ExpansionPanel>
-          <Dialog
-            fullScreen
-            open={this.state.open}
-            onClose={this.handleClose}
-            TransitionComponent={Transition}
-            className={classes.dialogback}
-          >
-            <AppBar className={classes.appBar}>
-              <Toolbar>
-                <IconButton
-                  color="inherit"
-                  onClick={this.handleClose}
-                  aria-label="Close"
-                >
-                  <CloseIcon />
-                </IconButton>
-                <Typography
-                  variant="h6"
-                  color="inherit"
-                  className={classes.flex}
-                >
-                  write a note
-                </Typography>
-              </Toolbar>
-            </AppBar>
-            {/* <Editor /> */}
-            {console.log("map " + e.note_id)}
-            <EditNote
-              auth_id={this.state.auth_id}
-              note_content={e.note_content}
-              note_id={e.note_id}
-              handleClose={this.handleClose}
-              note_title={e.note_title}
-            />
-          </Dialog>
         </div>
       );
     });
     return <div className="notescontainer">{notesdisplay}</div>;
   }
 }
-
-AllText.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 function mapStatetoProps(state) {
   return { state };

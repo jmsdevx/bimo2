@@ -62,20 +62,13 @@ class EditNote extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      //   editorState: EditorState.createEmpty(),
       editorState: EditorState.createWithContent(
         convertFromRaw(this.props.note_content)
       ),
       note: [],
       displayedNote: "new",
-      note_title: this.props.note_title,
-      note_id: this.props.note_id,
       note_type: "note"
     };
-    console.log(this.props.note_title);
-    console.log(this.state.note_title);
-    console.log("props" + this.props.note_id);
-    console.log("construct" + this.state.note_id);
     this.onChange = editorState => this.setState({ editorState });
     this.plugins = [highlightPlugin, addLinkPlugin];
   }
@@ -84,7 +77,7 @@ class EditNote extends Component {
     let contentState = this.state.editorState.getCurrentContent();
     let note = { content: convertToRaw(contentState) };
     let note_content = JSON.stringify(note.content);
-    const { note_id, note_title } = this.state;
+    const { note_id, note_title } = this.props;
 
     axios
       .put(`/api/write/note/${note_id}`, {
@@ -98,7 +91,7 @@ class EditNote extends Component {
     let contentState = this.state.editorState.getCurrentContent();
     let note = { content: convertToRaw(contentState) };
     let note_content = JSON.stringify(note.content);
-    const { note_id, note_title } = this.state;
+    const { note_id, note_title } = this.props;
 
     axios
       .put(`/api/write/note/${note_id}`, {
@@ -177,7 +170,7 @@ class EditNote extends Component {
                     className={classes.textField}
                     margin="normal"
                     variant="outlined"
-                    value={this.state.note_title}
+                    value={this.props.note_title}
                     onChange={e => this.titleChange(e.target.value)}
                     type="text"
                   />

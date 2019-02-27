@@ -148,8 +148,6 @@ class Profile extends Component {
   render() {
     const { classes } = this.props;
     let recents = this.state.recent.filter((e, i) => {
-      console.log("e -" + e.auth_id);
-      console.log("state -" + this.state.auth_id);
       return e.auth_id === this.state.auth_id;
     });
     let recentdisplay = recents.map((e, i) => {

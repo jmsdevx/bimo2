@@ -35,12 +35,6 @@ class SplashImage extends Component {
     const { checked } = this.state;
     return (
       <div>
-        <Switch
-          checked={checked}
-          onChange={this.handleChange}
-          aria-label="Collapse"
-          className={classes.switch}
-        />
         <FingerprintIcon
           className={classes.print}
           onClick={this.handleChange}
