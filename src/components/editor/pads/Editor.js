@@ -124,13 +124,13 @@ class PageContainer extends Component {
           });
   };
 
-  finishEditor = () => {
+  finishEditor = async () => {
     let contentState = this.state.editorState.getCurrentContent();
     let note = { content: convertToRaw(contentState) };
     let note_content = JSON.stringify(note.content);
     const { note_id, note_title } = this.state;
     console.log(this.props.auth_id);
-    this.state.check
+    (await this.state.check)
       ? axios
           .put(`/api/write/note/${note_id}`, {
             note_title: note_title,
@@ -145,6 +145,7 @@ class PageContainer extends Component {
             note_type: "note"
           })
           .then(this.props.getAllNotes());
+    this.props.handleClose();
   };
 
   handleKeyCommand = command => {
