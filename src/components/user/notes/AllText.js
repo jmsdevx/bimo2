@@ -75,7 +75,7 @@ class AllText extends Component {
     axios
       .delete(`/api/notes/all/${id}`, { auth_id: this.state.auth_id })
       .then(response => {
-        this.getAllNotes();
+        this.props.getAllNotes();
         // this.setState({ notes: response.data });
       })
       .catch(error => console.log(error));

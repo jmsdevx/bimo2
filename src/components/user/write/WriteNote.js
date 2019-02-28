@@ -103,7 +103,11 @@ class WriteNote extends Component {
           <AddIcon color="action" className={classes.add} />
         </Button>
         <div className={classes.notescontainer}>
-          <AllText type="note" notes={this.state.notes} />
+          <AllText
+            type="note"
+            notes={this.state.notes}
+            getAllNotes={this.getAllNotes}
+          />
         </div>
         <Dialog
           fullScreen
