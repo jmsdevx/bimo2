@@ -107,17 +107,17 @@ class PageContainer extends Component {
           .then(response => {
             // console.log(response.data[0].max);
             this.setState({ check: true, note_id: response.data[0].max });
-            console.log(this.state.note_id);
+            this.props.getAllNotes();
           });
   };
 
-  finishEditor = () => {
+  finishEditor = async () => {
     let contentState = this.state.editorState.getCurrentContent();
     let note = { content: convertToRaw(contentState) };
     let note_content = JSON.stringify(note.content);
     const { note_id, note_title } = this.state;
     console.log(this.props.auth_id);
-    this.state.check
+    (await this.state.check)
       ? axios
           .put(`/api/write/homework/${note_id}`, {
             note_title: note_title,
@@ -131,7 +131,8 @@ class PageContainer extends Component {
             auth_id: this.props.auth_id,
             note_type: "homework"
           })
-          .then(this.props.handleClose);
+          .then(this.props.getAllNotes());
+    this.props.handleClose();
   };
 
   handleKeyCommand = command => {

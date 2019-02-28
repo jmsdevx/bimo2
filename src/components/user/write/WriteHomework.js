@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { getUser } from "../../ducks/user_reducer";
 import AllText from "../notes/AllText";
 import AddIcon from "@material-ui/icons/Add";
+import axios from "axios";
 
 const styles = {
   appBar: {
@@ -57,13 +58,30 @@ class WriteHomework extends React.Component {
     this.state = {
       open: false,
       profile: [],
-      auth_id: ""
+      auth_id: "",
+      notes: []
     };
   }
 
   async componentDidMount() {
     await this.props.getUser();
+    this.getAllNotes();
   }
+
+  getAllNotes = () => {
+    const auth_id = this.props.state.user_reducer.user[0].auth_id;
+    if (this.props.type === "note") {
+      axios
+        .get(`/api/notes/all/${auth_id}`)
+        .then(response => this.setState({ notes: response.data }))
+        .catch(e => console.log(e));
+    } else {
+      axios
+        .get(`/api/notes/all/${auth_id}`)
+        .then(response => this.setState({ notes: response.data }))
+        .catch(e => console.log(e));
+    }
+  };
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -85,7 +103,7 @@ class WriteHomework extends React.Component {
           <AddIcon color="action" className={classes.add} />
         </Button>
         <div className={classes.notescontainer}>
-          <AllText type="homework" />
+          <AllText type="homework" notes={this.state.notes} />
         </div>
         <Dialog
           fullScreen
@@ -111,10 +129,13 @@ class WriteHomework extends React.Component {
               </Button>
             </Toolbar>
           </AppBar>
-          <HomeworkEditor
-            auth_id={this.props.state.user_reducer.user.auth_id}
-            handleClose={this.handleClose}
-          />
+          {this.props.state.user_reducer.user[0] && (
+            <HomeworkEditor
+              auth_id={this.props.state.user_reducer.user[0].auth_id}
+              handleClose={this.handleClose}
+              getAllNotes={this.getAllNotes}
+            />
+          )}
         </Dialog>
       </div>
     );

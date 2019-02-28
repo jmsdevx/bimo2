@@ -81,21 +81,6 @@ class PageContainer extends Component {
     this.setState({ check: false });
   }
 
-  //simple post submit
-  // submitEditor = () => {
-  //   let contentState = this.state.editorState.getCurrentContent();
-  //   let note = { content: convertToRaw(contentState) };
-  //   console.log(note);
-  //   let note_content = JSON.stringify(note.content);
-  //   const { email, note_title } = this.state;
-  //   axios.post("/api/homework", {
-  //     email: email,
-  //     note_content: note_content,
-  //     note_title: note_title
-  //   });
-  //   //   .then(this.props.history.push(``));
-  // };
-
   //conditional (draft based) submit
   submitEditor = () => {
     let contentState = this.state.editorState.getCurrentContent();
