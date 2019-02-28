@@ -243,3 +243,8 @@ a:hover {
   animation-duration: 0.5s;
   cursor: pointer;
 }
+
+.toast {
+  position: relative;
+  margin-left: 15vw;
+}

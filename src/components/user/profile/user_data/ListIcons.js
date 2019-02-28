@@ -3,7 +3,6 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import FaceIcon from "@material-ui/icons/Face";
-import SchoolIcon from "@material-ui/icons/School";
 import VoiceChatIcon from "@material-ui/icons/VoiceChat";
 import CreateIcon from "@material-ui/icons/Create";
 import SearchIcon from "@material-ui/icons/Search";
@@ -25,14 +24,6 @@ export const mainListItems = (
           <CreateIcon />
         </ListItemIcon>
         <ListItemText primary="Write" />
-      </ListItem>
-    </Link>
-    <Link to="/profile/notes">
-      <ListItem button>
-        <ListItemIcon>
-          <SchoolIcon />
-        </ListItemIcon>
-        <ListItemText primary="Notes" />
       </ListItem>
     </Link>
     <Link to="/profile/chat">

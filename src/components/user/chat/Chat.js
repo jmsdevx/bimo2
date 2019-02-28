@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import { withStyles } from "@material-ui/core";
 import alienhex from "../profile/user_data/alienhex.png";
+import Zoom from "@material-ui/core/Zoom";
 
 const styles = {
   chatback: {
@@ -179,9 +180,11 @@ class VideoComponent extends Component {
     const { classes } = this.props;
     // Only show video track after user has joined a room
     let showLocalTrack = this.state.localMediaAvailable ? (
-      <div className="flex-item">
-        <div ref="localMedia" />
-      </div>
+      <Zoom in={true} style={{ transitionDelay: true ? "100ms" : "0ms" }}>
+        <div className="flex-item">
+          <div ref="localMedia" />
+        </div>
+      </Zoom>
     ) : (
       ""
     );

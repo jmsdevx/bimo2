@@ -6,6 +6,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
+import Paper from "@material-ui/core/Paper";
+import Slide from "@material-ui/core/Slide";
 
 const styles = {
   card: {
@@ -85,7 +87,8 @@ class Search extends Component {
       antresults: [],
       antonyms: [],
       cardobject: [],
-      searchType: ""
+      searchType: "",
+      isError: false
     };
   }
 
@@ -96,22 +99,29 @@ class Search extends Component {
   handleSubmit = async e => {
     e.preventDefault();
     const { input, type } = this.state;
-    console.log(input);
+    const searchInput = input.split(" ")[0];
+    console.log(searchInput);
     if (type === "regions=us") {
       await axios
         .post("/api/search", {
-          input: input,
+          input: searchInput,
           type: type
         })
-        .then(response =>
+        .then(response => {
           this.setState({
             results: response.data,
-            check: false,
-            searchType: "defs"
-          })
-        )
-        .catch(e => console.log(e));
-      this.drilldefs();
+            searchType: "defs",
+            input: searchInput,
+            drillcheck: true
+          });
+        })
+        .catch(e => {
+          this.setState({ check: false });
+          alert("Try searching another word");
+        });
+      if (this.state.drillcheck) {
+        this.drilldefs();
+      }
     }
   };
 
@@ -136,8 +146,8 @@ class Search extends Component {
     }
     this.setState({
       cardobject: cardobject,
-      check: !this.state.check,
-      speech: speech
+      speech: speech,
+      check: true
     });
   };
 
@@ -152,7 +162,7 @@ class Search extends Component {
           searchType: "syns"
         })
       )
-      .catch(e => console.log(e));
+      .catch(e => alert("Try searching another word"));
   };
 
   speechDisplay() {
@@ -161,29 +171,34 @@ class Search extends Component {
   }
 
   render() {
+    console.log(this.state.check);
     const { classes } = this.props;
     let cardFactory = this.state.cardobject.map((e, i) => {
       return Object.values(e) !== typeof undefined ? (
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant="h5" component="h2">
-              {Object.keys(e)}
-            </Typography>
-            <Typography component="p">{Object.values(e)}</Typography>
-          </CardContent>
-        </Card>
+        <Slide direction="up" in={true}>
+          <Card className={classes.card}>
+            <CardContent>
+              <Typography variant="h5" component="h2">
+                {Object.keys(e)}
+              </Typography>
+              <Typography component="p">{Object.values(e)}</Typography>
+            </CardContent>
+          </Card>
+        </Slide>
       ) : null;
     });
 
     let syndisplay = this.state.synresults.map((e, i) => {
       return (
-        <Card className={classes.card}>
-          <CardContent>
-            <Typography variant="h5" component="h2">
-              {e.text}
-            </Typography>
-          </CardContent>
-        </Card>
+        <Slide direction="up" in={true}>
+          <Card className={classes.card}>
+            <CardContent>
+              <Typography variant="h5" component="h2">
+                {e.text}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Slide>
       );
     });
 
@@ -201,6 +216,7 @@ class Search extends Component {
               autoFocus
               onChange={this.handleChange}
               placeholder="search..."
+              value={this.state.input}
             />
             <Button className={classes.searchbtn} onClick={this.handleSubmit}>
               Search
@@ -214,6 +230,7 @@ class Search extends Component {
             <Speech speech={this.state.speech[0][0].audioFile} />
           ) : null}
         </div>
+
         <div className={classes.results}>
           <div className={classes.cardcontainer}>
             {this.state.searchType === "defs" ? cardFactory : syndisplay}
